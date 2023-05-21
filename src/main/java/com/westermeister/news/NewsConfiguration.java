@@ -16,8 +16,8 @@ public class NewsConfiguration {
 	 *
 	 * @return the encoder object
 	 */
-    @Bean
-    Encoder encoder() {
+	@Bean
+	Encoder encoder() {
 		return Base64.getUrlEncoder().withoutPadding();
 	}
 }
