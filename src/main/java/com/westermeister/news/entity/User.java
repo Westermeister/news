@@ -66,7 +66,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public Long getId() {
@@ -74,7 +74,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public void setId(Long id) {
@@ -82,7 +82,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public String getName() {
@@ -90,7 +90,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public void setName(String name) {
@@ -98,7 +98,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public String getEmail() {
@@ -106,7 +106,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public void setEmail(String email) {
@@ -114,7 +114,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public String getPassword() {
@@ -122,7 +122,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public void setPassword(String password) {
@@ -130,7 +130,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public Long getCreated() {
@@ -138,7 +138,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public void setCreated(Long created) {
@@ -146,7 +146,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public Long getLastSignIn() {
@@ -154,7 +154,7 @@ public class User {
     }
 
     /**
-     * @see #User(String name, String email, String password, Long created, Long lastSignIn)
+     * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
     public void setLastSignIn(Long lastSignIn) {
