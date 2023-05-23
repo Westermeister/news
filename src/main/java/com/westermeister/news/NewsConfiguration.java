@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class NewsConfiguration {
-	/**
-	 * Bean definition for a URL-safe Base64 encoder without padding.
-	 *
-	 * @return the encoder object
-	 */
-	@Bean
-	Encoder encoder() {
-		return Base64.getUrlEncoder().withoutPadding();
-	}
+    /**
+     * Bean definition for a URL-safe Base64 encoder without padding.
+     *
+     * @return the encoder object
+     */
+    @Bean
+    Encoder encoder() {
+        return Base64.getUrlEncoder().withoutPadding();
+    }
 }
