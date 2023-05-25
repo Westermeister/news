@@ -1,0 +1,108 @@
+{
+    "databaseChangeLog": [
+        {
+            "changeSet": {
+                "id": "1",
+                "author": "westermeister",
+                "changes": [
+                    {
+                        "createTable": {
+                            "tableName": "user_",
+                            "columns": [
+                                {
+                                    "column": {
+                                        "name": "id",
+                                        "type": "bigint",
+                                        "autoIncrement": true,
+                                        "constraints": {
+                                            "primaryKey": true,
+                                            "unique": true,
+                                            "nullable": false
+                                        }
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "name",
+                                        "type": "varchar(255)"
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "email",
+                                        "type": "varchar(255)",
+                                        "constraints": {
+                                            "unique": true
+                                        }
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "password",
+                                        "type": "varchar(255)"
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "created",
+                                        "type": "bigint"
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "last_sign_in",
+                                        "type": "bigint"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "changeSet": {
+                "id": "2",
+                "author": "westermeister",
+                "changes": [
+                    {
+                        "createTable": {
+                            "tableName": "session",
+                            "columns": [
+                                {
+                                    "column": {
+                                        "name": "id",
+                                        "type": "bigint",
+                                        "autoIncrement": true,
+                                        "constraints": {
+                                            "primaryKey": true,
+                                            "unique": true,
+                                            "nullable": false
+                                        }
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "user_id",
+                                        "type": "bigint",
+                                        "constraints": {
+                                            "foreignKeyName": "fk_session_user_id_user_",
+                                            "references": "user_(id)",
+                                            "deleteCascade": true
+                                        }
+                                    }
+                                },
+                                {
+                                    "column": {
+                                        "name": "token",
+                                        "type": "varchar(255)"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
