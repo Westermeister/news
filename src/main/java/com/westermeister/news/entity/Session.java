@@ -42,6 +42,24 @@ public class Session {
     }
 
     /**
+     * Construct human-readable string of the session entity.
+     *
+     * @return all of the session's columns formatted into a string
+     */
+    @Override
+    public String toString() {
+        return "Session [id=" + id + ", user=" + user.getId() + ", token=" + token + "]";
+    }
+
+    /**
+     * @see #Session(User, String)
+     *      documentation for each field
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
      * @see #Session(User, String)
      *      documentation for each field
      */
