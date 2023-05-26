@@ -62,35 +62,6 @@ public class User {
     }
 
     /**
-     * Convert User object to a string.
-     *
-     * @return all of the user's fields formatted into a string
-     */
-    @Override
-    public String toString() {
-        return String.format(
-            "User[id=%d, name=\"%s\", email=\"%s\", password=\"%s\", created=%d, last_sign_in=%d]",
-            id, name, email, password, created, lastSignIn
-        );
-    }
-
-    /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * @see #User(String, String, String, Long, Long)
      *      documentation for each field
      */
