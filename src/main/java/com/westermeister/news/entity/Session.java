@@ -28,17 +28,27 @@ public class Session {
     @Column(name = "token", length = 255)
     private String token;
 
+    @Column(name = "created")
+    private Long created;
+
+    @Column(name = "expires")
+    private Long expires;
+
     protected Session() {}
 
     /**
      * Construct a new session.
      *
-     * @param user   the user associated with this session
-     * @param token  a SHA3-512 hash (base64url w/o padding) of a random 512-bit number
+     * @param user     the user associated with this session
+     * @param token    a SHA3-512 hash (base64url w/o padding) of a random 512-bit number
+     * @param created  unix timestamp for when session was created; second precision
+     * @param expires  unix timestamp for when session will expire; second precision
      */
-    public Session(User user, String token) {
+    public Session(User user, String token, Long created, Long expires) {
         this.user = user;
         this.token = token;
+        this.created = created;
+        this.expires = expires;
     }
 
     /**
@@ -48,7 +58,8 @@ public class Session {
      */
     @Override
     public String toString() {
-        return "Session [id=" + id + ", user=" + user.getId() + ", token=" + token + "]";
+        return "Session [id=" + id + ", user=" + user.getId() + ", token=" + token + ", created=" + created + ", expires="
+                + expires + "]";
     }
 
     /**
@@ -89,5 +100,37 @@ public class Session {
      */
     public void setToken(String token) {
         this.token = token;
+    }
+
+    /**
+     * @see #Session(User, String)
+     *      documentation for each field
+     */
+    public Long getCreated() {
+        return created;
+    }
+
+    /**
+     * @see #Session(User, String)
+     *      documentation for each field
+     */
+    public void setCreated(Long created) {
+        this.created = created;
+    }
+
+    /**
+     * @see #Session(User, String)
+     *      documentation for each field
+     */
+    public Long getExpires() {
+        return expires;
+    }
+
+    /**
+     * @see #Session(User, String)
+     *      documentation for each field
+     */
+    public void setExpires(Long expires) {
+        this.expires = expires;
     }
 }
