@@ -17,5 +17,5 @@ CREATE TABLE session (
     token VARCHAR(255),
     created BIGINT,
     expires BIGINT,
-    CONSTRAINT fk_session_user_id_user_ FOREIGN KEY (user_id) REFERENCES user_(id) ON DELETE CASCADE
+    CONSTRAINT fk__session__user_id__user FOREIGN KEY (user_id) REFERENCES user_(id) ON DELETE CASCADE
 );
