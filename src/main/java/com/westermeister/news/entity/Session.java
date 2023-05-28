@@ -58,8 +58,10 @@ public class Session {
      */
     @Override
     public String toString() {
-        return "Session [id=" + id + ", user=" + user.getId() + ", token=" + token + ", created=" + created + ", expires="
-                + expires + "]";
+        return String.format(
+            "Session [id=%d, user=%d, token=%s, created=%d, expires=%d]",
+            id, user.getId(), token, created, expires
+        );
     }
 
     /**

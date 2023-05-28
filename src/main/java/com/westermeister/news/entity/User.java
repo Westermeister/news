@@ -68,8 +68,10 @@ public class User {
      */
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", created="
-                + created + ", lastSignIn=" + lastSignIn + "]";
+        return String.format(
+            "User [id=%d, name=%s, email=%s, password=%s, created=%d, last_sign_in=%d]",
+            id, name, email, password, created, lastSignIn
+        );
     }
 
     /**
