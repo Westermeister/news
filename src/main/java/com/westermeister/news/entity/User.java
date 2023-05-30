@@ -40,7 +40,7 @@ public class User {
      * @param name        user's name; 255 chars max; can be "anything" e.g. full name, nickname, etc.
      * @param email       user's email address; 255 chars max; must be unique
      * @param password    should be an argon2id hash; required params listed here:
-     *                    {@link com.westermeister.news.CryptoHelper#passwordHash(String)}
+     *                    {@link com.westermeister.news.util.CryptoHelper#passwordHash(String)}
      * @param created     unix timestamp, precise to the second, for when the user signed up
      * @param lastSignIn  unix timestamp, precise to the second, for last sign-in (signing up counts as signing in)
      */
