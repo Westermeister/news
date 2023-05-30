@@ -1,4 +1,4 @@
-package com.westermeister.news;
+package com.westermeister.news.config;
 
 import java.util.Base64;
 import java.util.Base64.Encoder;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * Provides manual bean definitions for classes from built-in / third-party libraries.
  */
 @Configuration
-public class NewsConfiguration {
+public class BeanConfiguration {
     /**
      * Bean definition for a URL-safe Base64 encoder without padding.
      *
