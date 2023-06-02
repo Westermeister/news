@@ -15,5 +15,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * @param email  user's email
      * @return       list of users
      */
-    List<User> findByEmail(String email);
+    List<User> findFirstByEmail(String email);
 }
