@@ -37,8 +37,10 @@ public class WriteController {
     /**
      * Create a new user.
      *
-     * @param model  context for rendering
-     * @return       account page
+     * @param signUpForm          form object for validation and transfer of form data
+     * @param bindingResult       used to validate the form
+     * @param redirectAttributes  used to add model attributes to redirected routes
+     * @return                    same page if any validation errors, otherwise account page
      */
     @PostMapping("/api/user")
     public String createUser(
