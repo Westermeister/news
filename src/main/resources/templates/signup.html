@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments :: commonHeadTags}"></th:block>
+        <title>Sign up - News Summary</title>
+    </head>
+    <body>
+        <header>
+            <div
+                class="alert alert-danger mb-3"
+                role="alert"
+                th:if="${user_already_exists != null}"
+                th:text="${user_already_exists}"
+            >
+                Sample error message for "user already exists".
+            </div>
+            <h1 class="mb-3">Sign up</h1>
+        </header>
+        <main>
+            <p>You can customize which news sources you see if you create an account.</p>
+            <form
+                action="#"
+                method="post"
+                th:action="@{/api/user}"
+                th:object="${signUpForm}"
+            >
+                <div class="mb-3">
+                    <label class="form-label" for="name-input">Full name</label>
+                    <input
+                        id="name-input"
+                        class="form-control"
+                        type="text"
+                        aria-describedby="invalid-feedback-name-input"
+                        autocomplete="name"
+                        th:classappend="${#fields.hasErrors('name')}? 'is-invalid'"
+                        th:field="*{name}"
+                    >
+                    <div
+                        id="invalid-feedback-name-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}"
+                    ></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email-input">Email address</label>
+                    <input
+                        id="email-input"
+                        class="form-control"
+                        type="text"
+                        aria-describedby="invalid-feedback-email-input"
+                        autocomplete="email"
+                        th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"
+                        th:field="*{email}"
+                    >
+                    <div
+                        id="invalid-feedback-email-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}"
+                    ></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password-input">Password</label>
+                    <input
+                        id="password-input"
+                        class="form-control"
+                        type="password"
+                        aria-describedby="invalid-feedback-password-input"
+                        aria-labelledby="password-input-help"
+                        autocomplete="new-password"
+                        th:classappend="${#fields.hasErrors('password')}? 'is-invalid'"
+                        th:field="*{password}"
+                    >
+                    <div
+                        id="invalid-feedback-password-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('password')}"
+                        th:errors="*{password}"
+                    ></div>
+                    <div id="password-input-help" class="form-text">Must be at least 8 characters.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </form>
+        </main>
+        <div th:replace="~{fragments :: commonScriptTags}"></div>
+    </body>
+</html>
