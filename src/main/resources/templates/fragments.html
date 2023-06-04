@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:fragment="commonHeadTags">
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="robots" content="noindex, nofollow">
+            <!--
+                Many thanks to Twemoji for providing the emojis used in this website!
+                Twemoji (https://twemoji.twitter.com/) is by Twitter, Inc and other contributors.
+                Twemoji is licensed under CC-BY 4.0: https://creativecommons.org/licenses/by/4.0/
+            -->
+            <link rel="icon" type="image/png" href="/img/favicon.png" th:href="@{/img/favicon.png}">
+            <!-- Bootstrap icons and stylesheet -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+            <!-- Google fonts (Roboto) -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link
+                href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+                rel="stylesheet"
+            >
+            <!-- All pages share a global stylesheet. -->
+            <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+        </th:block>
+        <!-- Most pages won't have page-specific styling. -->
+        <link
+            th:fragment="specificPageCss(stylesheet)"
+            rel="stylesheet"
+            type="text/css"
+            th:href="'/css/pages/' + ${stylesheet}"
+        >
+    </head>
+    <body>
+        <th:block th:fragment="commonScriptTags">
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+                crossorigin="anonymous"
+            ></script>
+        </th:block>
+    </body>
+</html>
