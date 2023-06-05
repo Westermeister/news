@@ -1,0 +1,28 @@
+/*! This stylesheet is included in every page. */
+
+$primary: #ffa408;
+$font-family-base: 'Roboto', sans-serif;
+
+@import "scss/bootstrap";
+
+html, body {
+    min-height: 100vh;
+    overflow: auto;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 668px;
+    padding: 0 0.375rem;
+}
+
+header {
+    margin-top: 2rem;
+}
+
+@media screen and (max-width: 700px) {
+    body {
+        max-width: 95%;
+        padding: 0;
+    }
+}
