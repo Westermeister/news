@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.westermeister.news.entity.User;
 import com.westermeister.news.repository.UserRepository;
 
 @Component
@@ -34,13 +34,14 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String email = username;
-        List<com.westermeister.news.entity.User> user = userRepo.findFirstByEmail(email);
-        if (user.isEmpty()) {
+        List<User> users = userRepo.findFirstByEmail(email);
+        if (users.isEmpty()) {
             String message = String.format("User not found: %s", email);
             throw new UsernameNotFoundException(message);
         }
-        String password = user.get(0).getPassword();
+        User user = users.get(0);
+        String password = user.getPassword();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        return new User(email, password, true, true, true, true, authorities);
+        return new org.springframework.security.core.userdetails.User(email, password, authorities);
     }
 }
