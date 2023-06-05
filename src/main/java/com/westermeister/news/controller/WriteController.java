@@ -1,7 +1,6 @@
 package com.westermeister.news.controller;
 
 import java.time.Instant;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -48,18 +47,17 @@ public class WriteController {
         BindingResult bindingResult,
         RedirectAttributes redirectAttributes
     ) {
-        if (bindingResult.hasErrors()) {
+        boolean hasValidationErrors = bindingResult.hasErrors();
+        boolean userAlreadyExists = !userRepo.findFirstByEmail(signUpForm.getEmail()).isEmpty();
+        if (hasValidationErrors || userAlreadyExists) {
+            if (userAlreadyExists) {
+                bindingResult.rejectValue("email", "error.email", "A user with this email already exists.");
+            }
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.signUpForm",
                 bindingResult
             );
             redirectAttributes.addFlashAttribute("signUpForm", signUpForm);
-            return "redirect:/signup";
-        }
-
-        List<User> userWithSameEmail = userRepo.findFirstByEmail(signUpForm.getEmail());
-        if (!userWithSameEmail.isEmpty()) {
-            redirectAttributes.addFlashAttribute("user_already_exists", "A user with that email already exists.");
             return "redirect:/signup";
         }
 
