@@ -3,7 +3,6 @@ package com.westermeister.news.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,7 +40,6 @@ public class JpaUserDetailsService implements UserDetailsService {
         }
         User user = users.get(0);
         String password = user.getPassword();
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        return new org.springframework.security.core.userdetails.User(email, password, authorities);
+        return new org.springframework.security.core.userdetails.User(email, password, new ArrayList<>());
     }
 }
