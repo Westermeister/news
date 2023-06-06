@@ -81,8 +81,10 @@ public class WriteController {
 
         try {
             request.login(signUpForm.getEmail(), signUpForm.getPassword());
-            redirectAttributes.addFlashAttribute("currentName", signUpForm.getName());
-            redirectAttributes.addFlashAttribute("currentEmail", signUpForm.getEmail());
+            redirectAttributes.addFlashAttribute(
+                "headerSuccessMessage",
+                "Thanks for signing up! You can view and make changes to your account below."
+            );
             return "redirect:/account";
         } catch (ServletException e) {
             return "redirect:/signin";
