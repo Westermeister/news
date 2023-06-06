@@ -39,7 +39,7 @@
                     <input
                         id="email-input"
                         class="form-control"
-                        type="text"
+                        type="email"
                         aria-describedby="invalid-feedback-email-input"
                         autocomplete="email"
                         th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"
@@ -70,7 +70,7 @@
                         th:if="${#fields.hasErrors('password')}"
                         th:errors="*{password}"
                     ></div>
-                    <div id="password-input-help" class="form-text">Must be at least 8 characters.</div>
+                    <div id="password-input-help" class="form-text">At least 8 characters.</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Sign up</button>
             </form>
