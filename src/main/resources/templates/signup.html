@@ -6,6 +6,14 @@
     </head>
     <body>
         <header>
+            <div
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+                th:if="${headerErrorMessage != null}"
+                th:text="${headerErrorMessage}"
+            >
+                Sample header error message.
+            </div>
             <h1 class="mb-3">Sign up</h1>
         </header>
         <main>
