@@ -7,20 +7,22 @@
     <body>
         <header>
             <div
-                class="alert alert-success alert-dismissible fade show"
+                class="alert alert-success alert-dismissible"
                 role="alert"
                 th:if="${headerSuccessMessage != null}"
-                th:text="${headerSuccessMessage}"
+                th:inline="text"
             >
-                Sample header success message.
+                [[${headerSuccessMessage}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <div
-                class="alert alert-danger alert-dismissible fade show"
+                class="alert alert-danger alert-dismissible"
                 role="alert"
                 th:if="${headerErrorMessage != null}"
-                th:text="${headerErrorMessage}"
+                th:inline="text"
             >
-                Sample header error message.
+                [[${headerErrorMessage}]]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <h1 class="mb-3">My account</h1>
         </header>
