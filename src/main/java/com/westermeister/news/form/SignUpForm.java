@@ -1,7 +1,8 @@
 package com.westermeister.news.form;
 
+import org.hibernate.validator.constraints.CodePointLength;
+
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 /**
  * Form for creating new users.
@@ -10,18 +11,18 @@ import jakarta.validation.constraints.Size;
  */
 public class SignUpForm {
     @NotNull
-    @Size(min=1, message="Enter your full name.")
-    @Size(max=255, message="Shorten your name to 255 characters or less, or just use your first name.")
+    @CodePointLength(min=1, message="Enter your full name.")
+    @CodePointLength(max=255, message="Shorten your name to 255 characters or less, or just use your first name.")
     private String name;
 
     @NotNull
-    @Size(min=1, message="Enter your email address.")
-    @Size(max=255, message="Provide an email that is 255 characters or less.")
+    @CodePointLength(min=1, message="Enter your email address.")
+    @CodePointLength(max=255, message="Provide an email that is 255 characters or less.")
     private String email;
 
     @NotNull
-    @Size(min=8, message="Enter at least 8 characters.")
-    @Size(max=255, message="Shorten your password to 255 characters or less.")
+    @CodePointLength(min=8, message="Enter at least 8 characters.")
+    @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String password;
 
     /**
