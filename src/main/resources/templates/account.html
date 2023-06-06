@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments :: commonHeadTags}"></th:block>
+        <title>My account - News Summary</title>
+    </head>
+    <body>
+        <header>
+            <div
+                class="alert alert-success alert-dismissible fade show"
+                role="alert"
+                th:if="${headerSuccessMessage != null}"
+                th:text="${headerSuccessMessage}"
+            >
+                Sample header success message.
+            </div>
+            <div
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+                th:if="${headerErrorMessage != null}"
+                th:text="${headerErrorMessage}"
+            >
+                Sample header error message.
+            </div>
+            <h1 class="mb-3">My account</h1>
+        </header>
+        <main>
+            <form
+                class="mb-3 account-info-form"
+                th:action="@{/api/user}"
+                th:method="patch"
+                th:object="${updateNameForm}"
+            >
+                <div class="form-floating account-info-form-field">
+                    <input
+                        id="name-input"
+                        class="form-control"
+                        type="text"
+                        aria-describedby="invalid-feedback-name-input"
+                        th:classappend="${#fields.hasErrors('name')}? 'is-invalid'"
+                        th:field="*{name}"
+                    >
+                    <label for="name-input">Current name</label>
+                    <div
+                        id="invalid-feedback-name-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}"
+                    ></div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary account-info-update-btn">Update</button>
+            </form>
+        </main>
+        <div th:replace="~{fragments :: commonScriptTags}"></div>
+    </body>
+</html>

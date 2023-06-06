@@ -1,0 +1,17 @@
+/*! Styling for the account page. */
+
+.account-info-form {
+    // Display form and button side-by-side.
+    display: flex;
+    gap: 0.5rem;
+}
+
+.account-info-form-field {
+    // Stretch to max width.
+    flex: 1 1 auto;
+}
+
+.account-info-update-btn {
+    // Same height as Bootstrap's input field with floating labels.
+    height: 58px;
+}

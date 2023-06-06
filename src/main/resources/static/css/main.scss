@@ -1,9 +1,16 @@
 /*! This stylesheet is included in every page. */
 
+// Bootstrap variable overrides should go here.
+// See for details: https://getbootstrap.com/docs/5.3/customize/sass/#importing
+
 $primary: #ffa408;
 $font-family-base: 'Roboto', sans-serif;
 
 @import "scss/bootstrap";
+
+// All other custom styling goes underneath here.
+
+@import "./pages/account.scss";
 
 html, body {
     min-height: 100vh;

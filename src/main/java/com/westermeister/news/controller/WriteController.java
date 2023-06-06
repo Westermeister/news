@@ -1,14 +1,18 @@
 package com.westermeister.news.controller;
 
+import java.security.Principal;
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.westermeister.news.entity.User;
 import com.westermeister.news.form.SignUpForm;
+import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.CryptoHelper;
 
@@ -91,6 +95,48 @@ public class WriteController {
         }
     }
 
+    /**
+     * Update user's name.
+     *
+     * @param principal           currently signed-in user
+     * @param updateNameForm      form data transfer object
+     * @param bindingResult       used to validate the form
+     * @param redirectAttributes  used to add model attributes to redirected routes
+     * @return                    same page, optionally including validation errors, if any
+     */
+    @PatchMapping("/api/user")
+    public String updateUserName(
+        Principal principal,
+        @Valid UpdateNameForm updateNameForm,
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute(
+                "org.springframework.validation.BindingResult.updateNameForm",
+                bindingResult
+            );
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "Your name was not updated. See the error below."
+            );
+            redirectAttributes.addFlashAttribute("updateNameForm", updateNameForm);
+            return "redirect:/account";
+        }
+
+        List<User> users = userRepo.findFirstByEmail(principal.getName());
+        if (users.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "We couldn't find your account. It may have been deleted by accident."
+            );
+            return "redirect:/signup";
+        }
+        User user = users.get(0);
+        user.setName(updateNameForm.getName());
+        userRepo.save(user);
+
+        redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your name has been successfully updated!");
         return "redirect:/account";
     }
 }
