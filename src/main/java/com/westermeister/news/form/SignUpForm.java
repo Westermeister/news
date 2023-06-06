@@ -21,9 +21,12 @@ public class SignUpForm {
     private String email;
 
     @NotNull
-    @CodePointLength(min=8, message="Enter at least 8 characters.")
+    @CodePointLength(min=8, message="Enter a valid password.")
     @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String password;
+
+    @NotNull
+    private String passwordAgain;
 
     /**
      * @see com.westermeister.news.entity.User corresponding entity class
@@ -65,5 +68,19 @@ public class SignUpForm {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @see com.westermeister.news.entity.User corresponding entity class
+     */
+    public String getPasswordAgain() {
+        return passwordAgain;
+    }
+
+    /**
+     * @see com.westermeister.news.entity.User corresponding entity class
+     */
+    public void setPasswordAgain(String passwordAgain) {
+        this.passwordAgain = passwordAgain;
     }
 }

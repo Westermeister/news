@@ -70,7 +70,25 @@
                         th:if="${#fields.hasErrors('password')}"
                         th:errors="*{password}"
                     ></div>
-                    <div id="password-input-help" class="form-text">At least 8 characters.</div>
+                    <div id="password-input-help" class="form-text">Enter at least 8 characters.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password-input">Type password again</label>
+                    <input
+                        id="password-again-input"
+                        class="form-control"
+                        type="password"
+                        aria-describedby="invalid-feedback-password-again-input"
+                        autocomplete="new-password"
+                        th:classappend="${#fields.hasErrors('passwordAgain')}? 'is-invalid'"
+                        th:field="*{passwordAgain}"
+                    >
+                    <div
+                        id="invalid-feedback-password-again-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('passwordAgain')}"
+                        th:errors="*{passwordAgain}"
+                    ></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Sign up</button>
             </form>
