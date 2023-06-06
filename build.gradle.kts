@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.webjars:bootstrap:5.1.3")
+    implementation("org.webjars:bootstrap:5.3.0")
     implementation("org.bouncycastle:bcprov-jdk18on:1.73")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
