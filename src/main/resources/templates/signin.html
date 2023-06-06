@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments :: commonHeadTags}"></th:block>
+        <title>Sign in - News Summary</title>
+    </head>
+    <body>
+        <header>
+            <div
+                class="alert alert-success alert-dismissible"
+                role="alert"
+                th:if="${param.logout}"
+            >
+                You have been signed out.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div
+                class="alert alert-danger alert-dismissible"
+                role="alert"
+                th:if="${param.error}"
+            >
+                Incorrect email address or password.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <h1 class="mb-3">Sign in</h1>
+        </header>
+        <main>
+            <form
+                method="post"
+                th:action="@{/signin}"
+            >
+                <div class="mb-3">
+                    <label class="form-label" for="email-input">Email address</label>
+                    <input
+                        id="email-input"
+                        class="form-control"
+                        name="username"
+                        type="email"
+                        autocomplete="email"
+                    >
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password-input">Password</label>
+                    <input
+                        id="password-input"
+                        class="form-control"
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+        </main>
+        <div th:replace="~{fragments :: commonScriptTags}"></div>
+    </body>
+</html>
