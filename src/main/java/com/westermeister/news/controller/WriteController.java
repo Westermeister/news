@@ -12,6 +12,8 @@ import com.westermeister.news.form.SignUpForm;
 import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.CryptoHelper;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 /**
@@ -43,6 +45,7 @@ public class WriteController {
      */
     @PostMapping("/api/user")
     public String createUser(
+        HttpServletRequest request,
         @Valid SignUpForm signUpForm,
         BindingResult bindingResult,
         RedirectAttributes redirectAttributes
@@ -51,7 +54,7 @@ public class WriteController {
         boolean userAlreadyExists = !userRepo.findFirstByEmail(signUpForm.getEmail()).isEmpty();
         if (hasValidationErrors || userAlreadyExists) {
             if (userAlreadyExists) {
-                bindingResult.rejectValue("email", "error.email", "A user with this email already exists.");
+                bindingResult.rejectValue("email", null, "A user with this email already exists.");
             }
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.signUpForm",
@@ -70,8 +73,17 @@ public class WriteController {
             creationTime
         );
         userRepo.save(user);
-        redirectAttributes.addFlashAttribute("name", signUpForm.getName());
-        redirectAttributes.addFlashAttribute("email", signUpForm.getEmail());
+
+        try {
+            request.login(signUpForm.getEmail(), signUpForm.getPassword());
+            redirectAttributes.addFlashAttribute("currentName", signUpForm.getName());
+            redirectAttributes.addFlashAttribute("currentEmail", signUpForm.getEmail());
+            return "redirect:/account";
+        } catch (ServletException e) {
+            return "redirect:/signin";
+        }
+    }
+
         return "redirect:/account";
     }
 }
