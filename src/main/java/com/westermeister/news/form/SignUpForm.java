@@ -83,4 +83,15 @@ public class SignUpForm {
     public void setPasswordAgain(String passwordAgain) {
         this.passwordAgain = passwordAgain;
     }
+
+    /**
+     * Convert object into a human-readable string.
+     *
+     * @return the form fields
+     */
+    @Override
+    public String toString() {
+        return "SignUpForm [name=" + name + ", email=" + email + ", password=" + password + ", passwordAgain="
+                + passwordAgain + "]";
+    }
 }

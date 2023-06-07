@@ -28,4 +28,14 @@ public class UpdateNameForm {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Convert object into a human-readable string.
+     *
+     * @return the form fields
+     */
+    @Override
+    public String toString() {
+        return "UpdateNameForm [name=" + name + "]";
+    }
 }
