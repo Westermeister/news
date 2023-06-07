@@ -16,6 +16,16 @@ public class UpdateNameForm {
     private String name;
 
     /**
+     * Convert object into a human-readable string.
+     *
+     * @return the form fields
+     */
+    @Override
+    public String toString() {
+        return "UpdateNameForm [name=" + name + "]";
+    }
+
+    /**
      * @see com.westermeister.news.entity.User corresponding entity class
      */
     public String getName() {
@@ -27,15 +37,5 @@ public class UpdateNameForm {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * Convert object into a human-readable string.
-     *
-     * @return the form fields
-     */
-    @Override
-    public String toString() {
-        return "UpdateNameForm [name=" + name + "]";
     }
 }
