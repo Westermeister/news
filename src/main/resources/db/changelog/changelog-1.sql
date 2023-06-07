@@ -9,13 +9,3 @@ CREATE TABLE user_ (
     created BIGINT,
     last_sign_in BIGINT
 );
-
---changeset westermeister:2
-CREATE TABLE session (
-    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT,
-    token VARCHAR(255),
-    created BIGINT,
-    expires BIGINT,
-    CONSTRAINT fk__session__user_id__user FOREIGN KEY (user_id) REFERENCES user_(id) ON DELETE CASCADE
-);
