@@ -10,8 +10,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.westermeister.news.entity.User;
 import com.westermeister.news.form.SignUpForm;
+import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.repository.UserRepository;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Handles all GET requests.
@@ -77,15 +81,18 @@ public class ReadController {
     public String account(
         Principal principal,
         RedirectAttributes redirectAttributes,
+        HttpServletRequest httpServletRequest,
         Model model
     ) {
         List<User> users = userRepo.findFirstByEmail(principal.getName());
         if (users.isEmpty()) {
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "We couldn't find your account. It may have been deleted by accident."
-            );
-            return "redirect:/signup";
+            try {
+                httpServletRequest.logout();
+            } catch (ServletException e) {
+                System.err.format("Failed to sign out user with unknown email: %s", principal.getName());
+            }
+            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
+            return "redirect:/signin";
         }
         User user = users.get(0);
 
@@ -93,6 +100,11 @@ public class ReadController {
             UpdateNameForm updateNameForm = new UpdateNameForm();
             updateNameForm.setName(user.getName());
             model.addAttribute("updateNameForm", updateNameForm);
+        }
+        if (!model.containsAttribute("updateEmailForm")) {
+            UpdateEmailForm updateEmailForm = new UpdateEmailForm();
+            updateEmailForm.setEmail(user.getEmail());
+            model.addAttribute("updateEmailForm", updateEmailForm);
         }
         return "account";
     }

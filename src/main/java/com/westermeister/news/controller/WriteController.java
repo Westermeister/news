@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.westermeister.news.entity.User;
 import com.westermeister.news.form.SignUpForm;
+import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.CryptoHelper;
@@ -49,10 +50,10 @@ public class WriteController {
      */
     @PostMapping("/api/user")
     public String createUser(
-        HttpServletRequest request,
         @Valid SignUpForm signUpForm,
         BindingResult bindingResult,
-        RedirectAttributes redirectAttributes
+        RedirectAttributes redirectAttributes,
+        HttpServletRequest httpServletRequest
     ) {
         boolean containsBasicErrors = bindingResult.hasErrors();
         boolean passwordsDontMatch = !signUpForm.getPassword().equals(signUpForm.getPasswordAgain());
@@ -84,7 +85,7 @@ public class WriteController {
         userRepo.save(user);
 
         try {
-            request.login(signUpForm.getEmail(), signUpForm.getPassword());
+            httpServletRequest.login(signUpForm.getEmail(), signUpForm.getPassword());
             redirectAttributes.addFlashAttribute(
                 "headerSuccessMessage",
                 "Thanks for signing up! You can view and make changes to your account below."
@@ -104,39 +105,94 @@ public class WriteController {
      * @param redirectAttributes  used to add model attributes to redirected routes
      * @return                    same page, optionally including validation errors, if any
      */
-    @PatchMapping("/api/user")
+    @PatchMapping("/api/user/name")
     public String updateUserName(
-        Principal principal,
         @Valid UpdateNameForm updateNameForm,
         BindingResult bindingResult,
-        RedirectAttributes redirectAttributes
+        RedirectAttributes redirectAttributes,
+        Principal principal,
+        HttpServletRequest httpServletRequest
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.updateNameForm",
                 bindingResult
             );
+            redirectAttributes.addFlashAttribute("updateNameForm", updateNameForm);
             redirectAttributes.addFlashAttribute(
                 "headerErrorMessage",
                 "Your name was not updated. See the error below."
             );
-            redirectAttributes.addFlashAttribute("updateNameForm", updateNameForm);
             return "redirect:/account";
         }
 
         List<User> users = userRepo.findFirstByEmail(principal.getName());
         if (users.isEmpty()) {
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "We couldn't find your account. It may have been deleted by accident."
-            );
-            return "redirect:/signup";
+            try {
+                httpServletRequest.logout();
+            } catch (ServletException e) {
+                System.err.format("Failed to sign out user with unknown email: %s", principal.getName());
+            }
+            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
+            return "redirect:/signin";
         }
         User user = users.get(0);
         user.setName(updateNameForm.getName());
         userRepo.save(user);
 
-        redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your name has been successfully updated!");
+        redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your name was successfully updated.");
         return "redirect:/account";
+    }
+
+    /**
+     * Update user's email.
+     *
+     * @param principal
+     */
+    @PatchMapping("/api/user/email")
+    public String updateUserEmail(
+        @Valid UpdateEmailForm updateEmailForm,
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes,
+        Principal principal,
+        HttpServletRequest httpServletRequest
+    ) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute(
+                "org.springframework.validation.BindingResult.updateEmailForm",
+                bindingResult
+            );
+            redirectAttributes.addFlashAttribute("updateEmailForm", updateEmailForm);
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "Your email was not updated. See the error below."
+            );
+            return "redirect:/account";
+        }
+
+        List<User> users = userRepo.findFirstByEmail(principal.getName());
+        if (users.isEmpty()) {
+            try {
+                httpServletRequest.logout();
+            } catch (ServletException e) {
+                System.err.format("Failed to sign out user with unknown email: %s", principal.getName());
+            }
+            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
+            return "redirect:/signin";
+        }
+        User user = users.get(0);
+        user.setEmail(updateEmailForm.getEmail());
+        userRepo.save(user);
+
+        try {
+            httpServletRequest.logout();
+            redirectAttributes.addFlashAttribute(
+                "headerSuccessMessage",
+                "Your email was successfully updated. Please sign in again."
+            );
+            return "redirect:/signin";
+        } catch (ServletException e) {
+            return "redirect:/signin";
+        }
     }
 }

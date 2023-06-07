@@ -12,7 +12,7 @@
         <main>
             <form
                 class="mb-3 account-info-form"
-                th:action="@{/api/user}"
+                th:action="@{/api/user/name}"
                 th:method="patch"
                 th:object="${updateNameForm}"
             >
@@ -31,6 +31,31 @@
                         class="invalid-feedback"
                         th:if="${#fields.hasErrors('name')}"
                         th:errors="*{name}"
+                    ></div>
+                </div>
+                <button type="submit" class="btn btn-outline-primary account-info-update-btn">Update</button>
+            </form>
+            <form
+                class="mb-3 account-info-form"
+                th:action="@{/api/user/email}"
+                th:method="patch"
+                th:object="${updateEmailForm}"
+            >
+                <div class="form-floating account-info-form-field">
+                    <input
+                        id="email-input"
+                        class="form-control"
+                        type="email"
+                        aria-describedby="invalid-feedback-email-input"
+                        th:classappend="${#fields.hasErrors('email')}? 'is-invalid'"
+                        th:field="*{email}"
+                    >
+                    <label for="email-input">Current email</label>
+                    <div
+                        id="invalid-feedback-email-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}"
                     ></div>
                 </div>
                 <button type="submit" class="btn btn-outline-primary account-info-update-btn">Update</button>
