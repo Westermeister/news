@@ -17,7 +17,7 @@ public class SignUpForm {
 
     @NotNull
     @CodePointLength(min=1, message="Enter your email address.")
-    @CodePointLength(max=255, message="Provide an email that is 255 characters or less.")
+    @CodePointLength(max=255, message="Provide an email address that is 255 characters or less.")
     private String email;
 
     @NotNull
