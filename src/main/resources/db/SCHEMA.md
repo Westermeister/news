@@ -187,16 +187,3 @@ CREATE TABLE user_ (
     last_sign_in BIGINT
 );
 ```
-
-## Session
-
-```sql
-CREATE TABLE session (
-    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    user_id BIGINT,
-    token VARCHAR(255),
-    created BIGINT,
-    expires BIGINT,
-    CONSTRAINT fk_session_user_id_user_ FOREIGN KEY (user_id) REFERENCES user_ (id) ON DELETE CASCADE
-);
-```
