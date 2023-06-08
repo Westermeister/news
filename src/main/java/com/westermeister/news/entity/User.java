@@ -37,12 +37,7 @@ public class User {
     /**
      * Construct a new user.
      *
-     * @param name        user's name; 255 chars max; can be "anything" e.g. full name, nickname, etc.
-     * @param email       user's email address; 255 chars max; must be unique
-     * @param password    should be an argon2id hash; required params listed here:
-     *                    {@link com.westermeister.news.util.CryptoHelper#passwordHash(String)}
-     * @param created     unix timestamp, precise to the second, for when the user signed up
-     * @param lastSignIn  unix timestamp, precise to the second, for last sign-in (signing up counts as signing in)
+     * @see "User.md" for schema documentation
      */
     public User(String name, String email, String password, Long created, Long lastSignIn) {
         this.name = name;
@@ -53,9 +48,9 @@ public class User {
     }
 
     /**
-     * Construct human-readable string of the user entity.
+     * Convert object to a human-readable string.
      *
-     * @return all of the user's columns formatted into a string
+     * @return all of the user's fields
      */
     @Override
     public String toString() {
@@ -66,88 +61,77 @@ public class User {
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public String getPassword() {
         return password;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public Long getCreated() {
         return created;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public void setCreated(Long created) {
         this.created = created;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public Long getLastSignIn() {
         return lastSignIn;
     }
 
     /**
-     * @see #User(String, String, String, Long, Long)
-     *      documentation for each field
+     * @see "User.md" for schema documentation
      */
     public void setLastSignIn(Long lastSignIn) {
         this.lastSignIn = lastSignIn;
