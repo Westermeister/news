@@ -1,0 +1,28 @@
+/** Overrides for Bootstrap's default navbar styling. */
+
+@import "../base/variables";
+
+.navbar {
+    margin-bottom: 2rem;
+}
+
+// Contents of navbar should be in same "width container" as rest of the page.
+.nav-inner-container {
+    max-width: $desktop-max-width;
+}
+
+// Separate home link and other links; they should be on left and right sides instead of being squished together.
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+// Vertically center the logo and home link text.
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-nav {
+    gap: 0.5rem;
+}

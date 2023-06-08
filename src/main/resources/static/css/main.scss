@@ -1,35 +1,9 @@
 /*! This stylesheet is included in every page. */
 
-// Bootstrap variable overrides should go here.
-// See for details: https://getbootstrap.com/docs/5.3/customize/sass/#importing
+@import "./base/bootstrap";
+@import "./base/layout";
+@import "./base/variables";
 
-$primary: #ffa408;
-$font-family-base: 'Roboto', sans-serif;
+@import "./components/navbar";
 
-@import "scss/bootstrap";
-
-// All other custom styling goes underneath here.
-
-@import "./pages/account.scss";
-
-html, body {
-    min-height: 100vh;
-    overflow: auto;
-}
-
-body {
-    margin: 0 auto;
-    max-width: 668px;
-    padding: 0 0.375rem;
-}
-
-header {
-    margin-top: 2rem;
-}
-
-@media screen and (max-width: 700px) {
-    body {
-        max-width: 95%;
-        padding: 0;
-    }
-}
+@import "./pages/account";
