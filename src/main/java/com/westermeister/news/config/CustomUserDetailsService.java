@@ -14,7 +14,7 @@ import com.westermeister.news.entity.User;
 import com.westermeister.news.repository.UserRepository;
 
 @Component
-public class JpaUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepo;
 
     /**
@@ -22,7 +22,7 @@ public class JpaUserDetailsService implements UserDetailsService {
      *
      * @param userRepo  user repository
      */
-    public JpaUserDetailsService(UserRepository userRepo) {
+    public CustomUserDetailsService(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
