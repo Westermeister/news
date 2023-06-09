@@ -16,6 +16,7 @@ import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.form.UpdatePasswordForm;
 import com.westermeister.news.repository.UserRepository;
+import com.westermeister.news.util.ControllerHelper;
 import com.westermeister.news.util.CryptoHelper;
 
 import jakarta.servlet.ServletException;
@@ -29,16 +30,19 @@ import jakarta.validation.Valid;
 public class WriteController {
     private UserRepository userRepo;
     private CryptoHelper cryptoHelper;
+    private ControllerHelper controllerHelper;
 
     /**
      * Inject dependencies.
      *
-     * @param userRepo      data access object for the user table
-     * @param cryptoHelper  helper class with cryptographic utilities
+     * @param userRepo          data access object for the user table
+     * @param cryptoHelper      helper class with cryptographic utilities
+     * @param controllerHelper  contains helpful utilities for controller logic
      */
-    public WriteController(UserRepository userRepo, CryptoHelper cryptoHelper) {
+    public WriteController(UserRepository userRepo, CryptoHelper cryptoHelper, ControllerHelper controllerHelper) {
         this.userRepo = userRepo;
         this.cryptoHelper = cryptoHelper;
+        this.controllerHelper = controllerHelper;
     }
 
     /**
@@ -134,13 +138,7 @@ public class WriteController {
         long userId = Long.parseLong(principal.getName());
         User user = userRepo.findById(userId).orElse(null);
         if (user == null) {
-            try {
-                httpServletRequest.logout();
-            } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown ID: %d", userId);
-            }
-            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
-            return "redirect:/signin";
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
         }
 
         user.setName(updateNameForm.getName());
@@ -183,13 +181,7 @@ public class WriteController {
         long userId = Long.parseLong(principal.getName());
         User user = userRepo.findById(userId).orElse(null);
         if (user == null) {
-            try {
-                httpServletRequest.logout();
-            } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown ID: %d", userId);
-            }
-            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
-            return "redirect:/signin";
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
         }
 
         user.setEmail(updateEmailForm.getEmail());
@@ -251,13 +243,7 @@ public class WriteController {
         long userId = Long.parseLong(principal.getName());
         User user = userRepo.findById(userId).orElse(null);
         if (user == null) {
-            try {
-                httpServletRequest.logout();
-            } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown ID: %d", userId);
-            }
-            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
-            return "redirect:/signin";
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
         }
 
         if (!cryptoHelper.verifyPasswordHash(updatePasswordForm.getCurrentPassword(), user.getPassword())) {

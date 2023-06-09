@@ -13,6 +13,7 @@ import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.form.UpdatePasswordForm;
 import com.westermeister.news.repository.UserRepository;
+import com.westermeister.news.util.ControllerHelper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,14 +24,17 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class ReadController {
     private UserRepository userRepo;
+    private ControllerHelper controllerHelper;
 
     /**
      * Inject dependencies.
      *
-     * @param userRepo  used for reading user data
+     * @param userRepo          used for reading user data
+     * @param controllerHelper  contains helpful utilities for controller logic
      */
-    public ReadController(UserRepository userRepo) {
+    public ReadController(UserRepository userRepo, ControllerHelper controllerHelper) {
         this.userRepo = userRepo;
+        this.controllerHelper = controllerHelper;
     }
 
     /**
@@ -87,13 +91,7 @@ public class ReadController {
         long userId = Long.parseLong(principal.getName());
         User user = userRepo.findById(userId).orElse(null);
         if (user == null) {
-            try {
-                httpServletRequest.logout();
-            } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown ID: %d", userId);
-            }
-            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
-            return "redirect:/signin";
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
         }
 
         if (!model.containsAttribute("updateNameForm")) {
