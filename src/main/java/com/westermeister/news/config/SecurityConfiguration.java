@@ -41,7 +41,10 @@ public class SecurityConfiguration {
                 .loginPage("/signin")
                 .permitAll()
             )
-            .logout((logout) -> logout.permitAll());
+            .logout((logout) -> logout
+                .logoutUrl("/signout")
+                .permitAll()
+            );
         return http.build();
     }
 
