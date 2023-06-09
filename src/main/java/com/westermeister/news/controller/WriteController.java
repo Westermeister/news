@@ -3,6 +3,7 @@ package com.westermeister.news.controller;
 import java.security.Principal;
 import java.time.Instant;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -63,7 +64,7 @@ public class WriteController {
                 bindingResult.rejectValue("passwordAgain", null, "The passwords didn't match. Try typing them again.");
             }
             if (userAlreadyExists) {
-                bindingResult.rejectValue("email", null, "A user with this email already exists.");
+                bindingResult.rejectValue("email", null, "A user with this email address already exists.");
             }
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.signUpForm",
@@ -115,11 +116,11 @@ public class WriteController {
         HttpServletRequest httpServletRequest
     ) {
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("updateNameForm", updateNameForm);
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.updateNameForm",
                 bindingResult
             );
-            redirectAttributes.addFlashAttribute("updateNameForm", updateNameForm);
             redirectAttributes.addFlashAttribute(
                 "headerErrorMessage",
                 "Your name was not updated. See the error below."
@@ -138,9 +139,9 @@ public class WriteController {
             redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
             return "redirect:/signin";
         }
+
         user.setName(updateNameForm.getName());
         userRepo.save(user);
-
         redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your name was successfully updated.");
         return "redirect:/account";
     }
@@ -159,11 +160,11 @@ public class WriteController {
         HttpServletRequest httpServletRequest
     ) {
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("updateEmailForm", updateEmailForm);
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.updateEmailForm",
                 bindingResult
             );
-            redirectAttributes.addFlashAttribute("updateEmailForm", updateEmailForm);
             redirectAttributes.addFlashAttribute(
                 "headerErrorMessage",
                 "Your email was not updated. See the error below."
@@ -182,8 +183,23 @@ public class WriteController {
             redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
             return "redirect:/signin";
         }
+
         user.setEmail(updateEmailForm.getEmail());
-        userRepo.save(user);
+        try {
+            userRepo.save(user);
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("updateEmailForm", updateEmailForm);
+            bindingResult.rejectValue("email", null, "Another user is already using this email address.");
+            redirectAttributes.addFlashAttribute(
+                "org.springframework.validation.BindingResult.updateEmailForm",
+                bindingResult
+            );
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "Your email was not updated. See the error below."
+            );
+            return "redirect:/account";
+        }
 
         redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your email was successfully updated.");
         return "redirect:/account";
