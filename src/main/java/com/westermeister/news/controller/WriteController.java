@@ -14,6 +14,7 @@ import com.westermeister.news.entity.User;
 import com.westermeister.news.form.SignUpForm;
 import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
+import com.westermeister.news.form.UpdatePasswordForm;
 import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.CryptoHelper;
 
@@ -46,6 +47,7 @@ public class WriteController {
      * @param signUpForm          form object for validation and transfer of form data
      * @param bindingResult       used to validate the form
      * @param redirectAttributes  used to add model attributes to redirected routes
+     * @param httpServletRequest  used to automatically sign in user after they sign up
      * @return                    same page if any validation errors, otherwise account page
      */
     @PostMapping("/api/user")
@@ -101,10 +103,11 @@ public class WriteController {
     /**
      * Update user's name.
      *
-     * @param principal           currently signed-in user
      * @param updateNameForm      form data transfer object
      * @param bindingResult       used to validate the form
      * @param redirectAttributes  used to add model attributes to redirected routes
+     * @param principal           currently signed-in user
+     * @param httpServletRequest  used to sign out user
      * @return                    same page, optionally including validation errors, if any
      */
     @PatchMapping("/api/user/name")
@@ -149,7 +152,12 @@ public class WriteController {
     /**
      * Update user's email.
      *
-     * @param principal
+     * @param updateEmailForm     form data transfer object
+     * @param bindingResult       used to validate the form
+     * @param redirectAttributes  used to add model attributes to redirected routes
+     * @param principal           currently signed-in user
+     * @param httpServletRequest  used to sign out user
+     * @return                    same page, optionally including validation errors, if any
      */
     @PatchMapping("/api/user/email")
     public String updateUserEmail(
@@ -202,6 +210,74 @@ public class WriteController {
         }
 
         redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your email was successfully updated.");
+        return "redirect:/account";
+    }
+
+    /**
+     * Update user's password.
+     *
+     * @param updatePasswordForm  form data transfer object
+     * @param bindingResult       used to validate the form
+     * @param redirectAttributes  used to add model attributes to redirected routes
+     * @param principal           currently signed-in user
+     * @param httpServletRequest  used to sign out user
+     * @return                    same page, optionally including validation errors, if any
+     */
+    @PatchMapping("/api/user/password")
+    public String updateUserPassword(
+        @Valid UpdatePasswordForm updatePasswordForm,
+        BindingResult bindingResult,
+        RedirectAttributes redirectAttributes,
+        Principal principal,
+        HttpServletRequest httpServletRequest
+    ) {
+        boolean passwordsMatch = updatePasswordForm.getNewPassword().equals(updatePasswordForm.getNewPasswordAgain());
+        if (bindingResult.hasErrors() || !passwordsMatch) {
+            redirectAttributes.addFlashAttribute("updatePasswordForm", updatePasswordForm);
+            if (!passwordsMatch) {
+                bindingResult.rejectValue("newPasswordAgain", null, "Passwords don't match.");
+            }
+            redirectAttributes.addFlashAttribute(
+                "org.springframework.validation.BindingResult.updatePasswordForm",
+                bindingResult
+            );
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "Your password was not updated. See the error below."
+            );
+            return "redirect:/account";
+        }
+
+        long userId = Long.parseLong(principal.getName());
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
+            try {
+                httpServletRequest.logout();
+            } catch (ServletException e) {
+                System.err.format("Failed to sign out user with unknown ID: %d", userId);
+            }
+            redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
+            return "redirect:/signin";
+        }
+
+        if (!cryptoHelper.verifyPasswordHash(updatePasswordForm.getCurrentPassword(), user.getPassword())) {
+            redirectAttributes.addFlashAttribute("updatePasswordForm", updatePasswordForm);
+            bindingResult.rejectValue("currentPassword", null, "Incorrect password.");
+            redirectAttributes.addFlashAttribute(
+                "org.springframework.validation.BindingResult.updatePasswordForm",
+                bindingResult
+            );
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "Your password was not updated. See the error below."
+            );
+            return "redirect:/account";
+        }
+
+        String newPassword = cryptoHelper.passwordHash(updatePasswordForm.getNewPassword());
+        user.setPassword(newPassword);
+        userRepo.save(user);
+        redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your password was successfully updated.");
         return "redirect:/account";
     }
 }

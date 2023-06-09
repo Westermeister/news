@@ -11,6 +11,7 @@ import com.westermeister.news.entity.User;
 import com.westermeister.news.form.SignUpForm;
 import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
+import com.westermeister.news.form.UpdatePasswordForm;
 import com.westermeister.news.repository.UserRepository;
 
 import jakarta.servlet.ServletException;
@@ -104,6 +105,10 @@ public class ReadController {
             UpdateEmailForm updateEmailForm = new UpdateEmailForm();
             updateEmailForm.setEmail(user.getEmail());
             model.addAttribute("updateEmailForm", updateEmailForm);
+        }
+        if (!model.containsAttribute("updatePasswordForm")) {
+            UpdatePasswordForm updatePasswordForm = new UpdatePasswordForm();
+            model.addAttribute("updatePasswordForm", updatePasswordForm);
         }
         return "account";
     }

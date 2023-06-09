@@ -8,7 +8,7 @@
         <div th:replace="~{fragments :: navbar}"></div>
         <header>
             <div th:replace="~{fragments :: headerMessages}"></div>
-            <h1 class="mb-3">My account</h1>
+            <h1 class="mb-5">My account</h1>
         </header>
         <main>
             <form
@@ -37,7 +37,7 @@
                 <button type="submit" class="btn btn-outline-primary account-info-update-btn">Update</button>
             </form>
             <form
-                class="mb-3 account-info-form"
+                class="mb-5 account-info-form"
                 th:action="@{/api/user/email}"
                 th:method="patch"
                 th:object="${updateEmailForm}"
@@ -60,6 +60,73 @@
                     ></div>
                 </div>
                 <button type="submit" class="btn btn-outline-primary account-info-update-btn">Update</button>
+            </form>
+            <form
+                class="mb-3"
+                th:action="@{/api/user/password}"
+                th:method="patch"
+                th:object="${updatePasswordForm}"
+            >
+                <p>
+                    <strong>Change password</strong>
+                </p>
+                <div class="mb-3">
+                    <label class="form-label" for="current-password-input">Current password</label>
+                    <input
+                        id="current-password-input"
+                        class="form-control"
+                        type="password"
+                        aria-describedby="invalid-feedback-current-password-input"
+                        autocomplete="current-password"
+                        th:classappend="${#fields.hasErrors('currentPassword')}? 'is-invalid'"
+                        th:field="*{currentPassword}"
+                    >
+                    <div
+                        id="invalid-feedback-current-password-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('currentPassword')}"
+                        th:errors="*{currentPassword}"
+                    ></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="new-password-input">New password</label>
+                    <input
+                        id="new-password-input"
+                        class="form-control"
+                        type="password"
+                        aria-describedby="invalid-feedback-new-password-input"
+                        aria-labelledby="new-password-input-help"
+                        autocomplete="new-password"
+                        th:classappend="${#fields.hasErrors('newPassword')}? 'is-invalid'"
+                        th:field="*{newPassword}"
+                    >
+                    <div
+                        id="invalid-feedback-new-password-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('newPassword')}"
+                        th:errors="*{newPassword}"
+                    ></div>
+                    <div id="new-password-input-help" class="form-text">Enter at least 8 characters.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="new-password-again-input">Type new password again</label>
+                    <input
+                        id="new-password-again-input"
+                        class="form-control"
+                        type="password"
+                        aria-describedby="invalid-feedback-new-password-again-input"
+                        autocomplete="new-password"
+                        th:classappend="${#fields.hasErrors('newPasswordAgain')}? 'is-invalid'"
+                        th:field="*{newPasswordAgain}"
+                    >
+                    <div
+                        id="invalid-feedback-new-password-again-input"
+                        class="invalid-feedback"
+                        th:if="${#fields.hasErrors('newPasswordAgain')}"
+                        th:errors="*{newPasswordAgain}"
+                    ></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </main>
         <div th:replace="~{fragments :: commonScriptTags}"></div>
