@@ -32,6 +32,9 @@ public class User {
     @Column(name = "last_sign_in")
     private Long lastSignIn;
 
+    @Column(name = "role")
+    private String role;
+
     protected User() {}
 
     /**
@@ -39,12 +42,13 @@ public class User {
      *
      * @see "User.md" for schema documentation
      */
-    public User(String name, String email, String password, Long created, Long lastSignIn) {
+    public User(String name, String email, String password, Long created, Long lastSignIn, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.created = created;
         this.lastSignIn = lastSignIn;
+        this.role = role;
     }
 
     /**
@@ -55,8 +59,8 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-            "User [id=%d, name=%s, email=%s, password=%s, created=%d, last_sign_in=%d]",
-            id, name, email, password, created, lastSignIn
+            "User [id=%d, name=%s, email=%s, password=%s, created=%d, last_sign_in=%d, role=%s]",
+            id, name, email, password, created, lastSignIn, role
         );
     }
 
@@ -135,5 +139,19 @@ public class User {
      */
     public void setLastSignIn(Long lastSignIn) {
         this.lastSignIn = lastSignIn;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -9,7 +9,8 @@ CREATE TABLE user_ (
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     created BIGINT,
-    last_sign_in BIGINT
+    last_sign_in BIGINT,
+    role VARCHAR(255)
 );
 ```
 
@@ -30,3 +31,6 @@ CREATE TABLE user_ (
 - last_sign_in
     - Same as above, but represents time that user last signed in
     - Signing up counts as signing in
+- role
+    - Used by Spring Security for authority / permissions
+    - e.g. `ROLE_USER`, `ROLE_ADMIN`, etc.
