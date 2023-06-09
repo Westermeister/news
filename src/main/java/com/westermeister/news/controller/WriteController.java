@@ -2,7 +2,6 @@ package com.westermeister.news.controller;
 
 import java.security.Principal;
 import java.time.Instant;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -80,7 +79,8 @@ public class WriteController {
             signUpForm.getEmail(),
             cryptoHelper.passwordHash(signUpForm.getPassword()),
             creationTime,
-            creationTime
+            creationTime,
+            "ROLE_USER"
         );
         userRepo.save(user);
 
@@ -92,6 +92,7 @@ public class WriteController {
             );
             return "redirect:/account";
         } catch (ServletException e) {
+            System.err.println("Failed to sign in user after registration.");
             return "redirect:/signin";
         }
     }
@@ -126,17 +127,17 @@ public class WriteController {
             return "redirect:/account";
         }
 
-        List<User> users = userRepo.findFirstByEmail(principal.getName());
-        if (users.isEmpty()) {
+        long userId = Long.parseLong(principal.getName());
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
             try {
                 httpServletRequest.logout();
             } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown email: %s", principal.getName());
+                System.err.format("Failed to sign out user with unknown ID: %d", userId);
             }
             redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
             return "redirect:/signin";
         }
-        User user = users.get(0);
         user.setName(updateNameForm.getName());
         userRepo.save(user);
 
@@ -170,29 +171,21 @@ public class WriteController {
             return "redirect:/account";
         }
 
-        List<User> users = userRepo.findFirstByEmail(principal.getName());
-        if (users.isEmpty()) {
+        long userId = Long.parseLong(principal.getName());
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
             try {
                 httpServletRequest.logout();
             } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown email: %s", principal.getName());
+                System.err.format("Failed to sign out user with unknown ID: %d", userId);
             }
             redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
             return "redirect:/signin";
         }
-        User user = users.get(0);
         user.setEmail(updateEmailForm.getEmail());
         userRepo.save(user);
 
-        try {
-            httpServletRequest.logout();
-            redirectAttributes.addFlashAttribute(
-                "headerSuccessMessage",
-                "Your email was successfully updated. Please sign in again."
-            );
-            return "redirect:/signin";
-        } catch (ServletException e) {
-            return "redirect:/signin";
-        }
+        redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your email was successfully updated.");
+        return "redirect:/account";
     }
 }

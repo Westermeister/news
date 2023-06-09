@@ -84,17 +84,17 @@ public class ReadController {
         HttpServletRequest httpServletRequest,
         Model model
     ) {
-        List<User> users = userRepo.findFirstByEmail(principal.getName());
-        if (users.isEmpty()) {
+        long userId = Long.parseLong(principal.getName());
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
             try {
                 httpServletRequest.logout();
             } catch (ServletException e) {
-                System.err.format("Failed to sign out user with unknown email: %s", principal.getName());
+                System.err.format("Failed to sign out user with unknown ID: %d", userId);
             }
             redirectAttributes.addFlashAttribute("headerErrorMessage", "Please sign in again.");
             return "redirect:/signin";
         }
-        User user = users.get(0);
 
         if (!model.containsAttribute("updateNameForm")) {
             UpdateNameForm updateNameForm = new UpdateNameForm();
