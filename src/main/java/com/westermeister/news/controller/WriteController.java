@@ -223,12 +223,8 @@ public class WriteController {
         Principal principal,
         HttpServletRequest httpServletRequest
     ) {
-        boolean passwordsMatch = updatePasswordForm.getNewPassword().equals(updatePasswordForm.getNewPasswordAgain());
-        if (bindingResult.hasErrors() || !passwordsMatch) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("updatePasswordForm", updatePasswordForm);
-            if (!passwordsMatch) {
-                bindingResult.rejectValue("newPasswordAgain", null, "Passwords don't match.");
-            }
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.updatePasswordForm",
                 bindingResult

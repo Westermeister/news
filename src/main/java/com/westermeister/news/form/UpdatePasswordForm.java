@@ -2,6 +2,7 @@ package com.westermeister.news.form;
 
 import org.hibernate.validator.constraints.CodePointLength;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -11,17 +12,24 @@ import jakarta.validation.constraints.NotNull;
  */
 public class UpdatePasswordForm {
     @NotNull
-    @CodePointLength(min=1, message="Enter your current password.")
-    @CodePointLength(max=255, message="All existing passwords are 255 characters or less. Please try again.")
+    @CodePointLength(min=8, message="Incorrect password.")
+    @CodePointLength(max=255, message="Incorrect password.")
     private String currentPassword;
 
     @NotNull
-    @CodePointLength(min=8, message="Enter a valid password.")
+    @CodePointLength(min=8, message="Enter at least 8 characters.")
     @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String newPassword;
 
     @NotNull
+    @CodePointLength(min=8, message="Enter at least 8 characters.")
+    @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String newPasswordAgain;
+
+    @AssertTrue(message="Passwords do not match.")
+    private boolean hasMatchingPasswords() {
+        return newPassword.equals(newPasswordAgain);
+    }
 
     /**
      * Convert object to a human-readable string.
