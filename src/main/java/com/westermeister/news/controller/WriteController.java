@@ -135,10 +135,9 @@ public class WriteController {
             return "redirect:/account";
         }
 
-        long userId = Long.parseLong(principal.getName());
-        User user = userRepo.findById(userId).orElse(null);
+        User user = controllerHelper.loadUserFromPrincipal(principal);
         if (user == null) {
-            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, principal);
         }
 
         user.setName(updateNameForm.getName());
@@ -178,10 +177,9 @@ public class WriteController {
             return "redirect:/account";
         }
 
-        long userId = Long.parseLong(principal.getName());
-        User user = userRepo.findById(userId).orElse(null);
+        User user = controllerHelper.loadUserFromPrincipal(principal);
         if (user == null) {
-            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, principal);
         }
 
         user.setEmail(updateEmailForm.getEmail());
@@ -236,10 +234,9 @@ public class WriteController {
             return "redirect:/account";
         }
 
-        long userId = Long.parseLong(principal.getName());
-        User user = userRepo.findById(userId).orElse(null);
+        User user = controllerHelper.loadUserFromPrincipal(principal);
         if (user == null) {
-            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, principal);
         }
 
         if (!cryptoHelper.verifyPasswordHash(updatePasswordForm.getCurrentPassword(), user.getPassword())) {

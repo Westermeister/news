@@ -12,7 +12,6 @@ import com.westermeister.news.form.SignUpForm;
 import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.form.UpdatePasswordForm;
-import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.ControllerHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,17 +21,14 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 @Controller
 public class ReadController {
-    private UserRepository userRepo;
     private ControllerHelper controllerHelper;
 
     /**
      * Inject dependencies.
      *
-     * @param userRepo          used for reading user data
      * @param controllerHelper  contains helpful utilities for controller logic
      */
-    public ReadController(UserRepository userRepo, ControllerHelper controllerHelper) {
-        this.userRepo = userRepo;
+    public ReadController(ControllerHelper controllerHelper) {
         this.controllerHelper = controllerHelper;
     }
 
@@ -87,10 +83,9 @@ public class ReadController {
         HttpServletRequest httpServletRequest,
         Model model
     ) {
-        long userId = Long.parseLong(principal.getName());
-        User user = userRepo.findById(userId).orElse(null);
+        User user = controllerHelper.loadUserFromPrincipal(principal);
         if (user == null) {
-            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, userId);
+            return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, principal);
         }
 
         if (!model.containsAttribute("updateNameForm")) {
