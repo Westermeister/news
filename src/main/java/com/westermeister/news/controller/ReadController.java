@@ -15,7 +15,6 @@ import com.westermeister.news.form.UpdatePasswordForm;
 import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.ControllerHelper;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
