@@ -126,6 +126,11 @@
                         th:errors="*{newPasswordAgain}"
                     ></div>
                 </div>
+                <div
+                    id="password-match-error"
+                    th:if="${#fields.hasErrors('passwordMatch')}"
+                    th:errors="*{passwordMatch}"
+                ></div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </main>

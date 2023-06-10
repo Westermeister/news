@@ -26,9 +26,9 @@ public class UpdatePasswordForm {
     @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String newPasswordAgain;
 
-    @AssertTrue(message="Passwords do not match.")
-    private boolean hasMatchingPasswords() {
-        return newPassword.equals(newPasswordAgain);
+    @AssertTrue(message="New passwords do not match. Try typing them again.")
+    public boolean isPasswordMatch() {
+        return newPassword != null && newPassword.equals(newPasswordAgain);
     }
 
     /**
