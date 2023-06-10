@@ -133,7 +133,32 @@
                 ></div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
+            <h2 class="fs-5">Delete account</h2>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-account-modal">
+                Delete account
+            </button>
         </main>
+        <div id="delete-account-modal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Are you sure?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-0">
+                            This action cannot be undone. If you want to return, you'll have to create a new account.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <form th:action="@{/api/user}" th:method="delete">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div th:replace="~{fragments :: commonScriptTags}"></div>
     </body>
 </html>

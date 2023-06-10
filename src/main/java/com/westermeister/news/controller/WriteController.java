@@ -6,6 +6,7 @@ import java.time.Instant;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -258,5 +259,28 @@ public class WriteController {
         userRepo.save(user);
         redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your password was successfully updated.");
         return "redirect:/account";
+    }
+
+    /**
+     * Delete user's account.
+     *
+     * @param principal  current user
+     * @param request    used to sign out the user
+     * @param redirect   used to redirect user to different pages
+     */
+    @DeleteMapping("/api/user")
+    public String deleteUser(Principal principal, HttpServletRequest request, RedirectAttributes redirect) {
+        User user = controllerHelper.loadUserFromPrincipal(principal);
+        if (user == null) {
+            return controllerHelper.handleMissingUser(request, redirect, principal);
+        }
+        try {
+            request.logout();
+        } catch (ServletException e) {
+            System.err.format("Failed to sign out user that's about to be deleted: %s%n", e.toString());
+        }
+        userRepo.delete(user);
+        redirect.addFlashAttribute("headerSuccessMessage", "Your account was succesfully deleted.");
+        return "redirect:/";
     }
 }
