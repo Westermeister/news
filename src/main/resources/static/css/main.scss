@@ -1,7 +1,11 @@
-/*! This stylesheet is included in every page. */
+/** This stylesheet is included in every page. It should only import from other stylesheets. */
 
+// NOTE: This should always be the first stylesheet.
+// For more details: https://getbootstrap.com/docs/5.3/customize/sass/#importing
 @import "./base/bootstrap";
+
 @import "./base/layout";
+@import "./base/utils";
 @import "./base/variables";
 
 @import "./components/navbar";

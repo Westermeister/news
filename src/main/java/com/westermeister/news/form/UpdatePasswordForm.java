@@ -28,7 +28,7 @@ public class UpdatePasswordForm {
 
     @AssertTrue(message="New passwords do not match. Try typing them again.")
     public boolean isPasswordMatch() {
-        return newPassword != null && newPassword.equals(newPasswordAgain);
+        return newPassword != null && newPasswordAgain != null && newPassword.equals(newPasswordAgain);
     }
 
     /**

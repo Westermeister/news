@@ -63,13 +63,8 @@ public class WriteController {
         HttpServletRequest httpServletRequest
     ) {
         boolean containsBasicErrors = bindingResult.hasErrors();
-        boolean passwordsDontMatch = !signUpForm.getPassword().equals(signUpForm.getPasswordAgain());
         boolean userAlreadyExists = !userRepo.findFirstByEmail(signUpForm.getEmail()).isEmpty();
-        if (containsBasicErrors || passwordsDontMatch || userAlreadyExists) {
-            if (passwordsDontMatch) {
-                bindingResult.rejectValue("password", null, "The passwords didn't match. Try typing them again.");
-                bindingResult.rejectValue("passwordAgain", null, "The passwords didn't match. Try typing them again.");
-            }
+        if (containsBasicErrors || userAlreadyExists) {
             if (userAlreadyExists) {
                 bindingResult.rejectValue("email", null, "A user with this email address already exists.");
             }

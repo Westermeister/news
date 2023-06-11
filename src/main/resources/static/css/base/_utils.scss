@@ -1,0 +1,10 @@
+/** A collection of useful standalone rulesets. */
+
+// This class is used to display errors when the user is asked to type a password twice, but they don't match.
+// We make the error more noticeable because unlike normal form errors, it's not tied to a particular field.
+// (Normally, errors ARE tied to fields, and the whole field is highlighted, which is very noticeable.)
+.password-match-error {
+    color: $danger;
+    font-weight: 700;
+    margin: 1rem 0;
+}
