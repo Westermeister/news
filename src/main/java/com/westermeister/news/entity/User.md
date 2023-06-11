@@ -5,12 +5,14 @@
 ```sql
 CREATE TABLE user_ (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
-    created BIGINT,
-    last_sign_in BIGINT,
-    role VARCHAR(255)
+    name CHARACTER VARYING(255),
+    email CHARACTER VARYING(255) UNIQUE,
+    password CHARACTER VARYING(255),
+    role CHARACTER VARYING(255),
+    created TIMESTAMP WITH TIME ZONE,
+    last_sign_in TIMESTAMP WITH TIME ZONE,
+    failed_sign_in_buffer SMALLINT,
+    next_allowed_sign_in TIMESTAMP WITH TIME ZONE
 );
 ```
 

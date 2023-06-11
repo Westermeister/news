@@ -1,7 +1,8 @@
 package com.westermeister.news.controller;
 
 import java.security.Principal;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -76,14 +77,16 @@ public class WriteController {
             return "redirect:/signup";
         }
 
-        long creationTime = Instant.now().getEpochSecond();
+        LocalDateTime signUpTime = LocalDateTime.now(ZoneOffset.UTC);
         User user = new User(
             signUpForm.getName(),
             signUpForm.getEmail(),
             cryptoHelper.passwordHash(signUpForm.getPassword()),
-            creationTime,
-            creationTime,
-            "ROLE_USER"
+            "ROLE_USER",
+            signUpTime,
+            signUpTime,
+            (short) 0,
+            signUpTime.minusSeconds((long) 1)
         );
         userRepo.save(user);
 

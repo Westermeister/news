@@ -1,5 +1,7 @@
 package com.westermeister.news.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,14 +28,20 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "created")
-    private Long created;
-
-    @Column(name = "last_sign_in")
-    private Long lastSignIn;
-
     @Column(name = "role")
     private String role;
+
+    @Column(name = "created")
+    private LocalDateTime created;
+
+    @Column(name = "last_sign_in")
+    private LocalDateTime lastSignIn;
+
+    @Column(name = "failed_sign_in_buffer")
+    private Short failedSignInBuffer;
+
+    @Column(name = "next_allowed_sign_in")
+    private LocalDateTime nextAllowedSignIn;
 
     protected User() {}
 
@@ -42,13 +50,24 @@ public class User {
      *
      * @see "User.md" for schema documentation
      */
-    public User(String name, String email, String password, Long created, Long lastSignIn, String role) {
+    public User(
+        String name,
+        String email,
+        String password,
+        String role,
+        LocalDateTime created,
+        LocalDateTime lastSignIn,
+        Short failedSignInBuffer,
+        LocalDateTime nextAllowedSignIn
+    ) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.created = created;
         this.lastSignIn = lastSignIn;
-        this.role = role;
+        this.failedSignInBuffer = failedSignInBuffer;
+        this.nextAllowedSignIn = nextAllowedSignIn;
     }
 
     /**
@@ -58,10 +77,9 @@ public class User {
      */
     @Override
     public String toString() {
-        return String.format(
-            "User [id=%d, name=%s, email=%s, password=%s, created=%d, last_sign_in=%d, role=%s]",
-            id, name, email, password, created, lastSignIn, role
-        );
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
+                + ", created=" + created + ", lastSignIn=" + lastSignIn + ", failedSignInBuffer=" + failedSignInBuffer
+                + ", nextAllowedSignIn=" + nextAllowedSignIn + "]";
     }
 
     /**
@@ -116,34 +134,6 @@ public class User {
     /**
      * @see "User.md" for schema documentation
      */
-    public Long getCreated() {
-        return created;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public void setCreated(Long created) {
-        this.created = created;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public Long getLastSignIn() {
-        return lastSignIn;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public void setLastSignIn(Long lastSignIn) {
-        this.lastSignIn = lastSignIn;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
     public String getRole() {
         return role;
     }
@@ -153,5 +143,61 @@ public class User {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public LocalDateTime getLastSignIn() {
+        return lastSignIn;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public void setLastSignIn(LocalDateTime lastSignIn) {
+        this.lastSignIn = lastSignIn;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public Short getFailedSignInBuffer() {
+        return failedSignInBuffer;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public void setFailedSignInBuffer(Short failedSignInBuffer) {
+        this.failedSignInBuffer = failedSignInBuffer;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public LocalDateTime getNextAllowedSignIn() {
+        return nextAllowedSignIn;
+    }
+
+    /**
+     * @see "User.md" for schema documentation
+     */
+    public void setNextAllowedSignIn(LocalDateTime nextAllowedSignIn) {
+        this.nextAllowedSignIn = nextAllowedSignIn;
     }
 }
