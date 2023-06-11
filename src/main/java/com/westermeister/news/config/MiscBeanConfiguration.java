@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Provides manual bean definitions for classes from built-in / third-party libraries.
+ * A collection of "miscellaneous", standalone beans that don't have a more specific place to be defined.
  */
 @Configuration
-public class BeanConfiguration {
+public class MiscBeanConfiguration {
     /**
      * Bean definition for a URL-safe Base64 encoder without padding.
      *
