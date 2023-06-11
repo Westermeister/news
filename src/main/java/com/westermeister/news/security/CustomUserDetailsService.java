@@ -1,4 +1,4 @@
-package com.westermeister.news.config;
+package com.westermeister.news.security;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.westermeister.news.config;
+package com.westermeister.news.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
