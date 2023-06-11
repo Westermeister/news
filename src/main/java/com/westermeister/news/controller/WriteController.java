@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +20,6 @@ import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.form.UpdatePasswordForm;
 import com.westermeister.news.repository.UserRepository;
 import com.westermeister.news.util.ControllerHelper;
-import com.westermeister.news.util.CryptoHelper;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,19 +31,19 @@ import jakarta.validation.Valid;
 @Controller
 public class WriteController {
     private UserRepository userRepo;
-    private CryptoHelper cryptoHelper;
+    private PasswordEncoder passwordEncoder;
     private ControllerHelper controllerHelper;
 
     /**
      * Inject dependencies.
      *
      * @param userRepo          data access object for the user table
-     * @param cryptoHelper      helper class with cryptographic utilities
+     * @param passwordEncoder   used to hash and compare passwords
      * @param controllerHelper  contains helpful utilities for controller logic
      */
-    public WriteController(UserRepository userRepo, CryptoHelper cryptoHelper, ControllerHelper controllerHelper) {
+    public WriteController(UserRepository userRepo, PasswordEncoder passwordEncoder, ControllerHelper controllerHelper) {
         this.userRepo = userRepo;
-        this.cryptoHelper = cryptoHelper;
+        this.passwordEncoder = passwordEncoder;
         this.controllerHelper = controllerHelper;
     }
 
@@ -81,7 +81,7 @@ public class WriteController {
         User user = new User(
             signUpForm.getName(),
             signUpForm.getEmail(),
-            cryptoHelper.passwordHash(signUpForm.getPassword()),
+            passwordEncoder.encode(signUpForm.getPassword()),
             "ROLE_USER",
             signUpTime,
             signUpTime,
@@ -222,7 +222,7 @@ public class WriteController {
             return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, principal);
         }
 
-        if (!cryptoHelper.verifyPasswordHash(updatePasswordForm.getCurrentPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(updatePasswordForm.getCurrentPassword(), user.getPassword())) {
             redirectAttributes.addFlashAttribute("updatePasswordForm", updatePasswordForm);
             bindingResult.rejectValue("currentPassword", null, "Incorrect password.");
             redirectAttributes.addFlashAttribute(
@@ -232,7 +232,7 @@ public class WriteController {
             return "redirect:/account";
         }
 
-        String newPassword = cryptoHelper.passwordHash(updatePasswordForm.getNewPassword());
+        String newPassword = passwordEncoder.encode(updatePasswordForm.getNewPassword());
         user.setPassword(newPassword);
         userRepo.save(user);
         redirectAttributes.addFlashAttribute("headerSuccessMessage", "Your password was successfully updated.");
