@@ -129,10 +129,6 @@ public class WriteController {
                 "org.springframework.validation.BindingResult.updateNameForm",
                 bindingResult
             );
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "Your name was not updated. See the error below."
-            );
             return "redirect:/account";
         }
 
@@ -171,10 +167,6 @@ public class WriteController {
                 "org.springframework.validation.BindingResult.updateEmailForm",
                 bindingResult
             );
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "Your email was not updated. See the error below."
-            );
             return "redirect:/account";
         }
 
@@ -192,10 +184,6 @@ public class WriteController {
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.updateEmailForm",
                 bindingResult
-            );
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "Your email was not updated. See the error below."
             );
             return "redirect:/account";
         }
@@ -228,10 +216,6 @@ public class WriteController {
                 "org.springframework.validation.BindingResult.updatePasswordForm",
                 bindingResult
             );
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "Your password was not updated. See the error below."
-            );
             return "redirect:/account";
         }
 
@@ -246,10 +230,6 @@ public class WriteController {
             redirectAttributes.addFlashAttribute(
                 "org.springframework.validation.BindingResult.updatePasswordForm",
                 bindingResult
-            );
-            redirectAttributes.addFlashAttribute(
-                "headerErrorMessage",
-                "Your password was not updated. See the error below."
             );
             return "redirect:/account";
         }

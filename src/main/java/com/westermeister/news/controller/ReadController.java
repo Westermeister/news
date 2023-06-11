@@ -88,19 +88,17 @@ public class ReadController {
             return controllerHelper.handleMissingUser(httpServletRequest, redirectAttributes, principal);
         }
 
+        model.addAttribute("currentName", user.getName());
+        model.addAttribute("currentEmail", user.getEmail());
+
         if (!model.containsAttribute("updateNameForm")) {
-            UpdateNameForm updateNameForm = new UpdateNameForm();
-            updateNameForm.setName(user.getName());
-            model.addAttribute("updateNameForm", updateNameForm);
+            model.addAttribute("updateNameForm", new UpdateNameForm());
         }
         if (!model.containsAttribute("updateEmailForm")) {
-            UpdateEmailForm updateEmailForm = new UpdateEmailForm();
-            updateEmailForm.setEmail(user.getEmail());
-            model.addAttribute("updateEmailForm", updateEmailForm);
+            model.addAttribute("updateEmailForm", new UpdateEmailForm());
         }
         if (!model.containsAttribute("updatePasswordForm")) {
-            UpdatePasswordForm updatePasswordForm = new UpdatePasswordForm();
-            model.addAttribute("updatePasswordForm", updatePasswordForm);
+            model.addAttribute("updatePasswordForm", new UpdatePasswordForm());
         }
         return "account";
     }
