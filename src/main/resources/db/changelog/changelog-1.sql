@@ -8,5 +8,5 @@ CREATE TABLE user_ (
     password CHARACTER VARYING(255),
     role CHARACTER VARYING(255),
     created TIMESTAMP(0) WITHOUT TIME ZONE,
-    last_sign_in TIMESTAMP(0) WITHOUT TIME ZONE,
+    last_sign_in TIMESTAMP(0) WITHOUT TIME ZONE
 );
