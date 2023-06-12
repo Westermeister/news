@@ -84,9 +84,7 @@ public class WriteController {
             passwordEncoder.encode(signUpForm.getPassword()),
             "ROLE_USER",
             signUpTime,
-            signUpTime,
-            (short) 0,
-            signUpTime.minusSeconds((long) 1)
+            signUpTime
         );
         userRepo.save(user);
 

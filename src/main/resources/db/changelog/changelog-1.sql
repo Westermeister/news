@@ -9,6 +9,4 @@ CREATE TABLE user_ (
     role CHARACTER VARYING(255),
     created TIMESTAMP(0) WITHOUT TIME ZONE,
     last_sign_in TIMESTAMP(0) WITHOUT TIME ZONE,
-    failed_sign_in_buffer SMALLINT,
-    next_allowed_sign_in TIMESTAMP(0) WITHOUT TIME ZONE
 );

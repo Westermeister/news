@@ -37,12 +37,6 @@ public class User {
     @Column(name = "last_sign_in")
     private LocalDateTime lastSignIn;
 
-    @Column(name = "failed_sign_in_buffer")
-    private Short failedSignInBuffer;
-
-    @Column(name = "next_allowed_sign_in")
-    private LocalDateTime nextAllowedSignIn;
-
     protected User() {}
 
     /**
@@ -56,9 +50,7 @@ public class User {
         String password,
         String role,
         LocalDateTime created,
-        LocalDateTime lastSignIn,
-        Short failedSignInBuffer,
-        LocalDateTime nextAllowedSignIn
+        LocalDateTime lastSignIn
     ) {
         this.name = name;
         this.email = email;
@@ -66,8 +58,6 @@ public class User {
         this.role = role;
         this.created = created;
         this.lastSignIn = lastSignIn;
-        this.failedSignInBuffer = failedSignInBuffer;
-        this.nextAllowedSignIn = nextAllowedSignIn;
     }
 
     /**
@@ -78,8 +68,7 @@ public class User {
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-                + ", created=" + created + ", lastSignIn=" + lastSignIn + ", failedSignInBuffer=" + failedSignInBuffer
-                + ", nextAllowedSignIn=" + nextAllowedSignIn + "]";
+                + ", created=" + created + ", lastSignIn=" + lastSignIn + "]";
     }
 
     /**
@@ -171,33 +160,5 @@ public class User {
      */
     public void setLastSignIn(LocalDateTime lastSignIn) {
         this.lastSignIn = lastSignIn;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public Short getFailedSignInBuffer() {
-        return failedSignInBuffer;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public void setFailedSignInBuffer(Short failedSignInBuffer) {
-        this.failedSignInBuffer = failedSignInBuffer;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public LocalDateTime getNextAllowedSignIn() {
-        return nextAllowedSignIn;
-    }
-
-    /**
-     * @see "User.md" for schema documentation
-     */
-    public void setNextAllowedSignIn(LocalDateTime nextAllowedSignIn) {
-        this.nextAllowedSignIn = nextAllowedSignIn;
     }
 }
