@@ -35,7 +35,10 @@ public class SecurityConfiguration {
                     "/signin",
                     "/success"
                 ).permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/create/user"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin((form) -> form

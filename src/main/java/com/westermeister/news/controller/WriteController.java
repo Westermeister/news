@@ -8,8 +8,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -56,7 +54,7 @@ public class WriteController {
      * @param httpServletRequest  used to automatically sign in user after they sign up
      * @return                    same page if any validation errors, otherwise account page
      */
-    @PostMapping("/api/user")
+    @PostMapping("/api/create/user")
     public String createUser(
         @Valid SignUpForm signUpForm,
         BindingResult bindingResult,
@@ -116,7 +114,7 @@ public class WriteController {
      * @param httpServletRequest  used to sign out user
      * @return                    same page, optionally including validation errors, if any
      */
-    @PatchMapping("/api/user/name")
+    @PostMapping("/api/update/user/name")
     public String updateUserName(
         @Valid UpdateNameForm updateNameForm,
         BindingResult bindingResult,
@@ -154,7 +152,7 @@ public class WriteController {
      * @param httpServletRequest  used to sign out user
      * @return                    same page, optionally including validation errors, if any
      */
-    @PatchMapping("/api/user/email")
+    @PostMapping("/api/update/user/email")
     public String updateUserEmail(
         @Valid UpdateEmailForm updateEmailForm,
         BindingResult bindingResult,
@@ -203,7 +201,7 @@ public class WriteController {
      * @param httpServletRequest  used to sign out user
      * @return                    same page, optionally including validation errors, if any
      */
-    @PatchMapping("/api/user/password")
+    @PostMapping("/api/update/user/password")
     public String updateUserPassword(
         @Valid UpdatePasswordForm updatePasswordForm,
         BindingResult bindingResult,
@@ -249,7 +247,7 @@ public class WriteController {
      * @param request    used to sign out the user
      * @param redirect   used to redirect user to different pages
      */
-    @DeleteMapping("/api/user")
+    @PostMapping("/api/delete/user")
     public String deleteUser(Principal principal, HttpServletRequest request, RedirectAttributes redirect) {
         User user = controllerHelper.loadUserFromPrincipal(principal);
         if (user == null) {

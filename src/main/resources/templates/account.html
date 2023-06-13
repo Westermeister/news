@@ -66,8 +66,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form
-                        th:action="@{/api/user/name}"
-                        th:method="patch"
+                        th:action="@{/api/update/user/name}"
+                        method="post"
                         th:object="${updateNameForm}"
                     >
                         <div class="modal-body">
@@ -108,8 +108,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form
-                        th:action="@{/api/user/email}"
-                        th:method="patch"
+                        th:action="@{/api/update/user/email}"
+                        method="post"
                         th:object="${updateEmailForm}"
                     >
                         <div class="modal-body">
@@ -150,8 +150,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form
-                        th:action="@{/api/user/password}"
-                        th:method="patch"
+                        th:action="@{/api/update/user/password}"
+                        method="post"
                         th:object="${updatePasswordForm}"
                     >
                         <div class="modal-body">
@@ -239,7 +239,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <form th:action="@{/api/user}" th:method="delete">
+                        <form th:action="@{/api/delete/user}" method="post">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-danger">Delete account</button>
                         </form>
