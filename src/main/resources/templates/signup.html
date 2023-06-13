@@ -33,11 +33,11 @@
         <main>
             <p>You can customize which news sources you see if you create an account.</p>
             <form
-                action="#"
+                id="sign-up-form"
+                class="mb-5"
                 method="post"
                 th:action="@{/api/user}"
                 th:object="${signUpForm}"
-                class="mb-5"
             >
                 <div class="mb-3">
                     <label class="form-label" for="name-input">Full name</label>
@@ -131,9 +131,25 @@
                     th:if="${#fields.hasErrors('passwordMatch')}"
                     th:errors="*{passwordMatch}"
                 ></div>
-                <button type="submit" class="btn btn-primary">Sign up</button>
+                <button id="sign-up-btn" type="submit" class="btn btn-primary">
+                    <span
+                        id="sign-up-btn-spinner"
+                        class="spinner-border spinner-border-sm visually-hidden"
+                        role="status"
+                        aria-hidden="true"
+                    ></span>
+                    <span id="sign-up-btn-text">Sign up</span>
+                </button>
             </form>
         </main>
+        <script>
+            const signUpForm = document.querySelector("#sign-up-form");
+            signUpForm.addEventListener("submit", function() {
+                document.querySelector("#sign-up-btn").setAttribute("disabled", "");
+                document.querySelector("#sign-up-btn-spinner").classList.remove("visually-hidden");
+                document.querySelector("#sign-up-btn-text").textContent = "Signing up...";
+            });
+        </script>
         <div th:replace="~{fragments :: commonScriptTags}"></div>
     </body>
 </html>
