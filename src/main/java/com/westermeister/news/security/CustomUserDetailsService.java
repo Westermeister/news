@@ -45,6 +45,9 @@ public class CustomUserDetailsService implements UserDetailsService {
         String password = user.getPassword();
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(user.getRole()));
+
+        // Below, we use the user ID, instead of the email, for Spring Security's notion of a "username".
+        // This is because we want to allow the user to change their email without requiring re-authentication.
         return new org.springframework.security.core.userdetails.User(
             user.getId().toString(),
             password,
