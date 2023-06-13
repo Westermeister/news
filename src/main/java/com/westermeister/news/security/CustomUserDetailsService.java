@@ -2,6 +2,8 @@ package com.westermeister.news.security;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,17 +15,21 @@ import org.springframework.stereotype.Component;
 import com.westermeister.news.entity.User;
 import com.westermeister.news.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepo;
+    private HttpServletRequest request;
 
     /**
      * Construct new object with dependency injection.
      *
      * @param userRepo  user repository
      */
-    public CustomUserDetailsService(UserRepository userRepo) {
+    public CustomUserDetailsService(UserRepository userRepo, HttpServletRequest request) {
         this.userRepo = userRepo;
+        this.request = request;
     }
 
     /**
@@ -34,6 +40,17 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (request.getRequestURI().equals("/signin")) {
+            // Throttle authentication to mitigate brute force attacks.
+            // On average, signing in will take 4 to 5 seconds.
+            int randomDelay = ThreadLocalRandom.current().nextInt(3, 6);
+            try {
+                TimeUnit.SECONDS.sleep(randomDelay);
+            } catch (InterruptedException e) {
+                System.err.format("Couldn't sleep because of error: %s%n", e.toString());
+            }
+        }
+
         String email = username;
         List<User> users = userRepo.findFirstByEmail(email);
         if (users.isEmpty()) {

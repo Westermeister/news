@@ -28,6 +28,7 @@
         </header>
         <main>
             <form
+                id="sign-in-form"
                 method="post"
                 th:action="@{/signin}"
             >
@@ -51,9 +52,25 @@
                         autocomplete="current-password"
                     >
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button id="sign-in-btn" type="submit" class="btn btn-primary">
+                    <span
+                        id="sign-in-btn-spinner"
+                        class="spinner-border spinner-border-sm visually-hidden"
+                        role="status"
+                        aria-hidden="true"
+                    ></span>
+                    <span id="sign-in-btn-text">Sign in</span>
+                </button>
             </form>
         </main>
+        <script>
+            const signInForm = document.querySelector("#sign-in-form");
+            signInForm.addEventListener("submit", function() {
+                document.querySelector("#sign-in-btn").setAttribute("disabled", "");
+                document.querySelector("#sign-in-btn-spinner").classList.remove("visually-hidden");
+                document.querySelector("#sign-in-btn-text").textContent = "Signing in...";
+            });
+        </script>
         <div th:replace="~{fragments :: commonScriptTags}"></div>
     </body>
 </html>
