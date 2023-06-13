@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--/* Fake success page that's given to spam bots when they try signing up and hit the honeypot field. */-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments :: commonHeadTags}"></th:block>
+        <title>Success - News Summary</title>
+    </head>
+    <body>
+        <div th:replace="~{fragments :: navbar}"></div>
+        <header>
+            <h1 class="mb-3">Success</h1>
+        </header>
+        <main>
+            <p>The form was successfully submitted!</p>
+        </main>
+        <div th:replace="~{fragments :: commonScriptTags}"></div>
+    </body>
+</html>

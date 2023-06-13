@@ -63,6 +63,11 @@ public class WriteController {
         RedirectAttributes redirectAttributes,
         HttpServletRequest httpServletRequest
     ) {
+        String honeypot = signUpForm.getUsername();
+        if (honeypot == null || honeypot.length() > 0) {
+            return "redirect:/success";
+        }
+
         boolean containsBasicErrors = bindingResult.hasErrors();
         boolean userAlreadyExists = !userRepo.findFirstByEmail(signUpForm.getEmail()).isEmpty();
         if (containsBasicErrors || userAlreadyExists) {

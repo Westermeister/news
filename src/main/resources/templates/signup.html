@@ -37,6 +37,7 @@
                 method="post"
                 th:action="@{/api/user}"
                 th:object="${signUpForm}"
+                class="mb-5"
             >
                 <div class="mb-3">
                     <label class="form-label" for="name-input">Full name</label>
@@ -55,6 +56,21 @@
                         th:if="${#fields.hasErrors('name')}"
                         th:errors="*{name}"
                     ></div>
+                </div>
+                <!--/* Invisible honeypot field; used to stop spam sign-ups. */-->
+                <div class="mb-3 form-group-offset">
+                    <label class="form-label" for="username-input">
+                        If you're reading this with a screen reader, then don't fill out this field.
+                    </label>
+                    <input
+                        id="username-input"
+                        class="form-control"
+                        type="text"
+                        aria-describedby="invalid-feedback-username-input"
+                        th:classappend="${#fields.hasErrors('username')}? 'is-invalid'"
+                        th:field="*{username}"
+                        tabindex="-12"
+                    >
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email-input">Email address</label>

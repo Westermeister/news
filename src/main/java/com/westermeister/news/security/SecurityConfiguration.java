@@ -32,7 +32,8 @@ public class SecurityConfiguration {
                     "/js/**",
                     "/",
                     "/signup",
-                    "/signin"
+                    "/signin",
+                    "/success"
                 ).permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
                 .anyRequest().authenticated()

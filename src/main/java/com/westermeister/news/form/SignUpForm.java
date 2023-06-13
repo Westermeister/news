@@ -11,22 +11,25 @@ import jakarta.validation.constraints.NotNull;
  * @see com.westermeister.news.entity.User corresponding entity class
  */
 public class SignUpForm {
-    @NotNull
+    // This is a honeypot field.
+    private String username;
+
+    @NotNull(message="This field is required.")
     @CodePointLength(min=1, message="Enter your full name.")
     @CodePointLength(max=255, message="Shorten your name to 255 characters or less, or just use your first name.")
     private String name;
 
-    @NotNull
+    @NotNull(message="This field is required.")
     @CodePointLength(min=1, message="Enter your email address.")
     @CodePointLength(max=255, message="Provide an email address that is 255 characters or less.")
     private String email;
 
-    @NotNull
+    @NotNull(message="This field is required.")
     @CodePointLength(min=8, message="Enter at least 8 characters.")
     @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String password;
 
-    @NotNull
+    @NotNull(message="This field is required.")
     @CodePointLength(min=8, message="Enter at least 8 characters.")
     @CodePointLength(max=255, message="Shorten your password to 255 characters or less.")
     private String passwordAgain;
@@ -43,8 +46,26 @@ public class SignUpForm {
      */
     @Override
     public String toString() {
-        return "SignUpForm [name=" + name + ", email=" + email + ", password=" + password + ", passwordAgain="
-                + passwordAgain + "]";
+        return "SignUpForm [username=" + username + ", name=" + name + ", email=" + email + ", password=" + password
+                + ", passwordAgain=" + passwordAgain + "]";
+    }
+
+    /**
+     * Get honeypot field.
+     *
+     * @return the "username", which should not be filled out
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Set honeypot field.
+     *
+     * @param username  value to set for the honeypot field
+     */
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**

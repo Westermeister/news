@@ -102,4 +102,14 @@ public class ReadController {
         }
         return "account";
     }
+
+    /**
+     * Process request for fake success page for spam bots.
+     *
+     * @return  name of the relevant template
+     */
+    @GetMapping("/success")
+    public String fakeSuccess() {
+        return "fake-success";
+    }
 }
