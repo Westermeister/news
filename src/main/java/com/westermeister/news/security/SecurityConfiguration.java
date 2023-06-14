@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  * Spring Security configuration class.
@@ -48,6 +49,9 @@ public class SecurityConfiguration {
             .logout((logout) -> logout
                 .logoutUrl("/signout")
                 .permitAll()
+            )
+            .sessionManagement(session -> session
+                .maximumSessions(10)
             );
         return http.build();
     }
@@ -60,5 +64,18 @@ public class SecurityConfiguration {
     @Bean
     PasswordEncoder passwordEncoder() {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+    }
+
+    /**
+     * Define session event publisher to limit concurrent user sessions.
+     * <p>
+     * This is required in order to add the ".sessionManagement(...)"
+     * line to the security filter chain configuration.
+     *
+     * @return session event publisher
+     */
+    @Bean
+    HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }
