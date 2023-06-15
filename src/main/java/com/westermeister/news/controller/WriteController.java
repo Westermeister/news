@@ -66,6 +66,14 @@ public class WriteController {
             return "redirect:/success";
         }
 
+        if (userRepo.count() >= 10000) {
+            redirectAttributes.addFlashAttribute(
+                "headerErrorMessage",
+                "Sorry, we're not accepting more users at this time."
+            );
+            return "redirect:/signup";
+        }
+
         boolean containsBasicErrors = bindingResult.hasErrors();
         boolean userAlreadyExists = !userRepo.findFirstByEmail(signUpForm.getEmail()).isEmpty();
         if (containsBasicErrors || userAlreadyExists) {
