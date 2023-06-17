@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.microsoft.playwright:playwright:1.35.0")
     implementation("org.webjars:bootstrap:5.3.0")
     implementation("org.bouncycastle:bcprov-jdk18on:1.73")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -36,6 +37,12 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<Test> {
+    this.testLogging {
+        this.showStandardStreams = true
+    }
 }
 
 tasks.getByName<Jar>("jar") {
