@@ -89,4 +89,24 @@ public class ReadController extends BaseController {
     public String fakeSuccess() {
         return "fake-success";
     }
+
+    /**
+     * Process request for terms of service.
+     *
+     * @return  name of the relevant template
+     */
+    @GetMapping("/terms-of-service")
+    public String termsOfService() {
+        return "terms-of-service";
+    }
+
+    /**
+     * Process request for privacy policy.
+     *
+     * @return  name of the relevant template
+     */
+    @GetMapping("/privacy-policy")
+    public String privacyPolicy() {
+        return "privacy-policy";
+    }
 }

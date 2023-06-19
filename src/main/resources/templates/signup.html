@@ -131,7 +131,7 @@
                     th:if="${#fields.hasErrors('passwordMatch')}"
                     th:errors="*{passwordMatch}"
                 ></div>
-                <button id="sign-up-btn" type="submit" class="btn btn-primary">
+                <button id="sign-up-btn" type="submit" class="btn btn-primary mb-2" aria-describedby="sign-up-note">
                     <span
                         id="sign-up-btn-spinner"
                         class="spinner-border spinner-border-sm visually-hidden"
@@ -140,6 +140,12 @@
                     ></span>
                     <span id="sign-up-btn-text">Sign up</span>
                 </button>
+                <div id="sign-up-note" class="form-text">
+                    By clicking "Sign up", you agree to our
+                    <a th:href="@{/terms-of-service}">Terms of Service</a>
+                    and acknowledge that you have read and understand our
+                    <a th:href="@{/privacy-policy}">Privacy Policy</a>.
+                </div>
             </form>
         </main>
         <script>

@@ -61,7 +61,9 @@ public class SecurityConfiguration {
                     "/",
                     "/signup",
                     "/signin",
-                    "/success"
+                    "/success",
+                    "/terms-of-service",
+                    "/privacy-policy"
                 ).permitAll()
                 .requestMatchers(
                     HttpMethod.POST,
