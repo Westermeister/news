@@ -48,7 +48,8 @@ public class NytimesSpider {
             result = response.results();
             return result;
         } catch (RestClientException e) {
-            System.err.format("Received error while calling NYTimes API: %s%n", e);
+            System.err.println("Received below error while calling NYTimes API:");
+            e.printStackTrace();
             return result;
         }
     }
