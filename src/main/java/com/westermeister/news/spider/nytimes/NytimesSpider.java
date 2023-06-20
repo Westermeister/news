@@ -37,7 +37,14 @@ public class NytimesSpider {
         String endpoint = String.format("https://api.nytimes.com/svc/topstories/v2/home.json?api-key=%s", apiKey);
         try {
             NytimesResponse response = restTemplate.getForObject(endpoint, NytimesResponse.class);
-            if (response == null || !response.status().equals("OK")) return result;
+            if (response == null || !response.status().equals("OK")) {
+                if (response == null) {
+                    System.err.println("Got null for response to NYTimes API call.");
+                } else if (!response.status().equals("OK")) {
+                    System.err.format("Did not get OK status from NYTimes API; instead got: %s%n", response.status());
+                }
+                return result;
+            }
             result = response.results();
             return result;
         } catch (RestClientException e) {
