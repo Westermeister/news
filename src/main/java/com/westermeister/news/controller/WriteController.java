@@ -97,7 +97,8 @@ public class WriteController extends BaseController {
             );
             return "redirect:/account";
         } catch (ServletException e) {
-            System.err.println("Failed to sign in user after registration.");
+            System.err.println("Failed to sign in user after registration, got below error:");
+            e.printStackTrace();
             return "redirect:/signin";
         }
     }
@@ -230,7 +231,8 @@ public class WriteController extends BaseController {
         try {
             request.logout();
         } catch (ServletException e) {
-            System.err.format("Failed to sign out user that's about to be deleted: %s%n", e.toString());
+            System.err.format("Failed to sign out user that's about to be deleted: %d%n", user.getId());
+            e.printStackTrace();
         }
         userRepo.delete(user);
         redirect.addFlashAttribute("headerSuccessMessage", "Your account was succesfully deleted.");
