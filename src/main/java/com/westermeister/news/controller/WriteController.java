@@ -48,11 +48,11 @@ public class WriteController extends BaseController {
     /**
      * Create a new user.
      *
-     * @param signUpForm          form object for validation and transfer of form data
-     * @param bindingResult       used to validate the form
-     * @param redirectAttributes  used to add model attributes to redirected routes
-     * @param httpServletRequest  used to automatically sign in user after they sign up
-     * @return                    same page if any validation errors, otherwise account page
+     * @param signUpForm  form backing object
+     * @param result      used to validate the form
+     * @param redirect    used to add model attributes when redirecting
+     * @param request     used to automatically sign in user after they sign up
+     * @return            same page if any validation errors, otherwise account page
      */
     @PostMapping("/create/user")
     public String createUser(
@@ -105,12 +105,13 @@ public class WriteController extends BaseController {
     /**
      * Update user's name.
      *
-     * @param updateNameForm  form data transfer object
+     * @param updateNameForm  form backing object
      * @param result          used to validate the form
-     * @param redirect        used to add model attributes to redirected routes
+     * @param redirect        used to add model attributes when redirecting
      * @param principal       currently signed-in user
-     * @param request         used to sign out user
-     * @return                same page, optionally including validation errors, if any
+     * @param request         used to sign out user if they're missing from database
+     * @return                redirect to same page if success; no-redirect same page if validation errors;
+     *                        and redirect to missing-user page if user is missing
      */
     @PostMapping("/update/user/name")
     public String updateUserName(
@@ -137,12 +138,13 @@ public class WriteController extends BaseController {
     /**
      * Update user's email.
      *
-     * @param updateEmailForm  form data transfer object
+     * @param updateEmailForm  form backing object
      * @param result           used to validate the form
-     * @param redirect         used to add model attributes to redirected routes
+     * @param redirect         used to add model attributes when redirecting
      * @param principal        currently signed-in user
-     * @param request          used to sign out user
-     * @return                 same page, optionally including validation errors, if any
+     * @param request          used to sign out user if they're missing from the database
+     * @return                 redirect to same page if success; no-redirect same page if validation errors;
+     *                         and redirect to missing-user page if user is missing
      */
     @PostMapping("/update/user/email")
     public String updateUserEmail(
@@ -176,12 +178,13 @@ public class WriteController extends BaseController {
     /**
      * Update user's password.
      *
-     * @param updatePasswordForm  form data transfer object
+     * @param updatePasswordForm  form backing object
      * @param result              used to validate the form
-     * @param redirect            used to add model attributes to redirected routes
+     * @param redirect            used to add model attributes when redirecting
      * @param principal           currently signed-in user
-     * @param request             used to sign out user
-     * @return                    same page, optionally including validation errors, if any
+     * @param request             used to sign out user if they're missing from the database
+     * @return                    redirect to same page if success; no-redirect same page if validation errors;
+     *                            and redirect to missing-user page if user is missing
      */
     @PostMapping("/update/user/password")
     public String updateUserPassword(
@@ -216,8 +219,9 @@ public class WriteController extends BaseController {
      * Delete user's account.
      *
      * @param principal  current user
-     * @param request    used to sign out the user
-     * @param redirect   used to redirect user to different pages
+     * @param request    used to sign out the user after deletion
+     * @param redirect   used to add model attributes when redirecting
+     * @return           redirect to home page if success; redirect to missing-user page if user is missing;
      */
     @PostMapping("/delete/user")
     public String deleteUser(Principal principal, HttpServletRequest request, RedirectAttributes redirect) {
