@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.westermeister.news.entity.Snippet;
 
-import java.util.List;
+import java.util.Optional;
 
 /**
  * CRUD interface for interacting with the snippet table.
@@ -16,5 +16,5 @@ public interface SnippetRepository extends CrudRepository<Snippet, Long> {
      * @param slot  slot number for the snipet
      * @return      list of snippets
      */
-    List<Snippet> findFirstBySlot(Short slot);
+    Optional<Snippet> findFirstBySlot(Short slot);
 }
