@@ -17,7 +17,7 @@ CREATE TABLE snippet (
 - id
     - Surrogate primary key.
 - slot
-    - Should be an integer from 1 to 10.
+    - Should be an integer from 0 to 9.
     - The app only displays the top 10 news snippets, in order that they're retrieved from the NYTimes API.
     - The order corresponds to the slot number.
     - When the news is refreshed, the existing slots are replaced with new ones.
