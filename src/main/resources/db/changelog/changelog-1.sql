@@ -20,3 +20,9 @@ CREATE TABLE snippet (
     last_updated TIMESTAMP(0) WITHOUT TIME ZONE
 );
 
+--changeset westermeister:3
+CREATE TABLE lock (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    task CHARACTER VARYING(255) UNIQUE,
+    created TIMESTAMP(0) WITHOUT TIME ZONE
+);
