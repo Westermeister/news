@@ -10,3 +10,13 @@ CREATE TABLE user_ (
     created TIMESTAMP(0) WITHOUT TIME ZONE,
     last_sign_in TIMESTAMP(0) WITHOUT TIME ZONE
 );
+
+--changeset westermeister:2
+CREATE TABLE snippet (
+    id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    slot SMALLINT,
+    summary CHARACTER VARYING(255),
+    source CHARACTER VARYING(255),
+    last_updated TIMESTAMP(0) WITHOUT TIME ZONE
+);
+
