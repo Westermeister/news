@@ -1,5 +1,6 @@
 package com.westermeister.news.spider.openai;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +43,9 @@ public class OpenAiSpider {
      * @param headline      the news headline
      * @param abstractText  the abstract text for the corresponding article
      * @return              resulting summary; if error, will be empty
+     * @throws IOException  if there was any problem related to calling the API
      */
-    public String getSummary(String headline, String abstractText) {
+    public String getSummary(String headline, String abstractText) throws IOException {
         String endpoint = "https://api.openai.com/v1/chat/completions";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -71,8 +73,7 @@ public class OpenAiSpider {
         try {
             requestBody = objectMapper.writeValueAsString(requestObject);
         } catch (JsonProcessingException e) {
-            System.err.format("Tried to serialize OpenAI request body to JSON, but got error: %s%n", e);
-            return "";
+            throw new IOException("Could not serialize OpenAI request body to JSON", e);
         }
 
         // Send API request.
@@ -80,21 +81,17 @@ public class OpenAiSpider {
         try {
             OpenAiResponse response = restTemplate.postForObject(endpoint, entity, OpenAiResponse.class);
             if (response == null) {
-                System.err.println("Got null for response to OpenAI request.");
-                return "";
+                throw new IOException("Got null object for response to OpenAI API request");
             }
             List<OpenAiChoice> choices = response.choices();
             if (choices.size() == 0) {
-                System.err.println("Received empty choices-array for OpenAI response.");
-                return "";
+                throw new IOException("Received empty choices-array for OpenAI response");
             }
             OpenAiMessage message = choices.get(0).message();
             String summary = message.content();
             return summary;
         } catch (RestClientException e) {
-            System.err.println("Tried to call OpenAI endpoint, but got below error:");
-            e.printStackTrace();
-            return "";
+            throw new IOException("Failed to call OpenAI API endpoint", e);
         }
     }
 }

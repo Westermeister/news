@@ -1,5 +1,6 @@
 package com.westermeister.news.spider.nytimes;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,27 +31,24 @@ public class NytimesSpider {
     /**
      * Get stories from the API.
      *
-     * @return list of stories; if error, will be empty
+     * @return              list of stories; if error, will be empty
+     * @throws IOException  if there's an error while calling the API, or if the API returns an unexpected response
      */
-    public List<NytimesStory> getStories() {
+    public List<NytimesStory> getStories() throws IOException {
         List<NytimesStory> result = new ArrayList<>();
         String endpoint = String.format("https://api.nytimes.com/svc/topstories/v2/home.json?api-key=%s", apiKey);
         try {
             NytimesResponse response = restTemplate.getForObject(endpoint, NytimesResponse.class);
-            if (response == null || !response.status().equals("OK")) {
-                if (response == null) {
-                    System.err.println("Got null for response to NYTimes API call.");
-                } else if (!response.status().equals("OK")) {
-                    System.err.format("Did not get OK status from NYTimes API; instead got: %s%n", response.status());
-                }
-                return result;
+            if (response == null) {
+                throw new IOException("Got null object after calling NYTimes API");
+            }
+            if (!response.status().equals("OK")) {
+                throw new IOException(String.format("Got non-OK status from NYTimes API: %s%n", response.status()));
             }
             result = response.results();
             return result;
         } catch (RestClientException e) {
-            System.err.println("Received below error while calling NYTimes API:");
-            e.printStackTrace();
-            return result;
+            throw new IOException("Failed call to NYTimes API", e);
         }
     }
 }
