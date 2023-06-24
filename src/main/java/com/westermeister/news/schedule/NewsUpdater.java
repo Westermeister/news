@@ -68,8 +68,7 @@ public class NewsUpdater {
     /**
      * Thrice a day: get top stories, summarize each of them, and update database.
      */
-    // @Scheduled(cron = "0 0 0,8,16 * * *")
-    @Scheduled(cron = "*/59 * * * * *")
+    @Scheduled(cron = "0 0 0,8,16 * * *")
     @Transactional
     public void updateNews() {
         logger.info("Starting scheduled task: {}", taskName);
@@ -78,8 +77,7 @@ public class NewsUpdater {
             performUpdate();
             logger.info("Completed scheduled task: {}", taskName);
         } catch (Exception e) {
-            logger.error("Failed to execute task {}; got below error:", taskName);
-            e.printStackTrace();
+            throw new RuntimeException("Failed to execute scheduled task", e);
         }
     }
 
