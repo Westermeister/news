@@ -31,7 +31,7 @@ public class NytimesSpider {
     /**
      * Get stories from the API.
      *
-     * @return              list of stories; if error, will be empty
+     * @return              list of stories
      * @throws IOException  if there's an error while calling the API, or if the API returns an unexpected response
      */
     public List<NytimesStory> getStories() throws IOException {

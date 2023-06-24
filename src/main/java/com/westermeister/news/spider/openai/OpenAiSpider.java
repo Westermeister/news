@@ -42,7 +42,7 @@ public class OpenAiSpider {
      *
      * @param headline      the news headline
      * @param abstractText  the abstract text for the corresponding article
-     * @return              resulting summary; if error, will be empty
+     * @return              resulting summary
      * @throws IOException  if there was any problem related to calling the API
      */
     public String getSummary(String headline, String abstractText) throws IOException {
