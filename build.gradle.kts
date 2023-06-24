@@ -3,7 +3,7 @@ import sass.embedded_protocol.EmbeddedSass.OutputStyle
 
 plugins {
     java
-    id("org.springframework.boot") version "3.1.0"
+    id("org.springframework.boot") version "3.1.1"
     id("io.spring.dependency-management") version "1.1.0"
     id("io.freefair.sass-base") version "8.0.1"
     id("io.freefair.sass-webjars") version "8.0.1"
