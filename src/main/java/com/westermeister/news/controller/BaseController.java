@@ -5,11 +5,13 @@ import java.security.Principal;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.westermeister.news.entity.Snippet;
 import com.westermeister.news.entity.User;
 import com.westermeister.news.form.SignUpForm;
 import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.form.UpdatePasswordForm;
+import com.westermeister.news.repository.SnippetRepository;
 import com.westermeister.news.repository.UserRepository;
 
 import jakarta.servlet.ServletException;
@@ -20,14 +22,17 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public abstract class BaseController {
     private UserRepository userRepo;
+    private SnippetRepository snippetRepo;
 
     /**
      * Inject dependencies.
      *
-     * @param userRepo  used to access
+     * @param userRepo     used to access users
+     * @param snippetRepo  used to access news snippets
      */
-    public BaseController(UserRepository userRepo) {
+    public BaseController(UserRepository userRepo, SnippetRepository snippetRepo) {
         this.userRepo = userRepo;
+        this.snippetRepo = snippetRepo;
     }
 
     /**
@@ -61,6 +66,16 @@ public abstract class BaseController {
         }
         redirect.addFlashAttribute("headerErrorMessage", "Please sign in again.");
         return "redirect:/signin";
+    }
+
+    /**
+     * Populates the model for the homepage.
+     *
+     * @param model  will be modified to add the news snippets
+     */
+    public void populateIndexModel(Model model) {
+        Iterable<Snippet> snippets = snippetRepo.findAll();
+        model.addAttribute("snippets", snippets);
     }
 
     /**

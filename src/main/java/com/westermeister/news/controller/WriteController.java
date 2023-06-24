@@ -18,6 +18,7 @@ import com.westermeister.news.form.SignUpForm;
 import com.westermeister.news.form.UpdateEmailForm;
 import com.westermeister.news.form.UpdateNameForm;
 import com.westermeister.news.form.UpdatePasswordForm;
+import com.westermeister.news.repository.SnippetRepository;
 import com.westermeister.news.repository.UserRepository;
 
 import jakarta.servlet.ServletException;
@@ -38,9 +39,10 @@ public class WriteController extends BaseController {
      *
      * @param userRepo          data access object for the user table
      * @param passwordEncoder   used to hash and compare passwords
+     * @param snippetRepo       used to initialize base class
      */
-    public WriteController(UserRepository userRepo, PasswordEncoder passwordEncoder) {
-        super(userRepo);
+    public WriteController(UserRepository userRepo, PasswordEncoder passwordEncoder, SnippetRepository snippetRepo) {
+        super(userRepo, snippetRepo);
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
     }

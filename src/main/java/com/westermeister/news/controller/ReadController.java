@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.westermeister.news.repository.SnippetRepository;
 import com.westermeister.news.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,10 +20,11 @@ public class ReadController extends BaseController {
     /**
      * Inject dependencies.
      *
-     * @param controllerHelper  contains helpful utilities for controller logic
+     * @param userRepo     used to initialize base class
+     * @param snippetRepo  used to initialize base class
      */
-    public ReadController(UserRepository userRepo) {
-        super(userRepo);
+    public ReadController(UserRepository userRepo, SnippetRepository snippetRepo) {
+        super(userRepo, snippetRepo);
     }
 
     /**
@@ -33,6 +35,7 @@ public class ReadController extends BaseController {
      */
     @GetMapping("/")
     public String index(Model model) {
+        populateIndexModel(model);
         return "index";
     }
 

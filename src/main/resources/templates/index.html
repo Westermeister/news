@@ -8,9 +8,15 @@
         <div th:replace="~{fragments :: navbar}"></div>
         <header>
             <div th:replace="~{fragments :: headerMessages}"></div>
+            <h1 class="display-4 text-center mb-5">Daily News Summary</h1>
         </header>
         <main>
-            Hello World!
+            <ol>
+                <li th:each="snippet : ${snippets}" class="mb-3">
+                    <span th:text="${snippet.summary}"></span>
+                    <a th:href="${snippet.source}">source</a>
+                </li>
+            </ol>
         </main>
         <div th:replace="~{fragments :: commonScriptTags}"></div>
     </body>
