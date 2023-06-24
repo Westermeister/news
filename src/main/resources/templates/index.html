@@ -11,12 +11,23 @@
             <h1 class="display-4 text-center mb-5">Daily News Summary</h1>
         </header>
         <main>
-            <ol>
+            <ol class="mb-5">
                 <li th:each="snippet : ${snippets}" class="mb-3">
                     <span th:text="${snippet.summary}"></span>
                     <a th:href="${snippet.source}">source</a>
                 </li>
             </ol>
+            <section>
+                <p class="text-secondary text-center mb-3">
+                    Data provided by
+                    <a class="link-secondary" href="https://developer.nytimes.com/">The New York Times</a>
+                    and summarized by OpenAI's
+                    <a class="link-secondary" href="https://openai.com/blog/introducing-chatgpt-and-whisper-apis">ChatGPT</a>.
+                </p>
+                <a id="nytimes-logo" href="https://developer.nytimes.com/">
+                    <img th:src="@{/img/nytimes-logo.png}" alt="Logo for The New York Times">
+                </a>
+            </section>
         </main>
         <div th:replace="~{fragments :: commonScriptTags}"></div>
     </body>
