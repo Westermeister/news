@@ -14,4 +14,3 @@ CREATE TABLE lock (
 
 - task
     - Name of the scheduled task being run.
-    - Acts as a lock to prevent multiple nodes duplicating the same task.
