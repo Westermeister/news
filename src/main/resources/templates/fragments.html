@@ -97,6 +97,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </th:block>
+        <footer th:fragment="footer" id="footer" class="bg-secondary py-3 mt-5">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a th:href="@{/signin}" class="nav-link px-2 text-muted">Sign in</a></li>
+                <li class="nav-item"><a th:href="@{/signup}" class="nav-link px-2 text-muted">Sign up</a></li>
+                <li class="nav-item"><a th:href="@{/terms-of-service}" class="nav-link px-2 text-muted">Terms of Service</a></li>
+                <li class="nav-item"><a th:href="@{/privacy-policy}" class="nav-link px-2 text-muted">Privacy Policy</a></li>
+            </ul>
+            <p class="text-center text-muted mb-0">Copyright &copy; 2023 Westermeister</p>
+        </footer>
         <th:block th:fragment="commonScriptTags"></th:block>
     </body>
 </html>

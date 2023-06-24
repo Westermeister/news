@@ -63,6 +63,7 @@
                 </button>
             </form>
         </main>
+        <div th:replace="~{fragments :: footer}"></div>
         <script>
             const signInForm = document.querySelector("#sign-in-form");
             signInForm.addEventListener("submit", function() {
