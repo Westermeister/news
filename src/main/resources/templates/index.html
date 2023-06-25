@@ -22,11 +22,18 @@
                     Data provided by
                     <a class="link-secondary" href="https://developer.nytimes.com/">The New York Times</a>
                     and summarized by OpenAI's
-                    <a class="link-secondary" href="https://openai.com/blog/introducing-chatgpt-and-whisper-apis">ChatGPT</a>.
+                    <a class="link-secondary" href="https://openai.com/blog/introducing-chatgpt-and-whisper-apis">
+                        ChatGPT
+                    </a>.
                 </p>
-                <a id="nytimes-logo" href="https://developer.nytimes.com/">
-                    <img th:src="@{/img/nytimes-logo.png}" alt="Logo for The New York Times">
-                </a>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="https://developer.nytimes.com/">
+                        <img th:src="@{/img/nytimes-logo.png}" alt="Logo for The New York Times">
+                    </a>
+                    <a id="openai-logo" href="https://openai.com/blog/introducing-chatgpt-and-whisper-apis">
+                        <img th:src="@{/img/openai-logomark.svg}" alt="Logomark for OpenAI">
+                    </a>
+                </div>
             </section>
         </main>
         <div th:replace="~{fragments :: footer}"></div>
