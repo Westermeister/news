@@ -64,7 +64,10 @@ class NewsApplicationTests {
         // Test signing up.
         page.navigate(site + "/signup");
         assertEquals(page.title(), "Sign up - News Summary");
-        assertTrue(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Sign up")).isVisible());
+        assertTrue(page.getByRole(
+            AriaRole.HEADING,
+            new Page.GetByRoleOptions().setName("Sign up").setExact(true)
+        ).isVisible());
         fillSignUpFormAndSubmit(page);
 
         // Basic sanity check that we're on the account page.
