@@ -66,9 +66,9 @@ public class NewsUpdater {
     }
 
     /**
-     * Thrice a day: get top stories, summarize each of them, and update database.
+     * Twice a day: get top stories, summarize each of them, and update database.
      */
-    @Scheduled(cron = "0 0 0,8,16 * * *")
+    @Scheduled(cron = "0 0 4,16 * * *")
     @Transactional
     public void updateNews() {
         logger.info("Starting scheduled task: {}", taskName);
