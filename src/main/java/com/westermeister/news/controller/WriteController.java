@@ -31,7 +31,13 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/api")
 public class WriteController extends BaseController {
+    /**
+     * Don't allow more sign-ups than this.
+     */
+    private final int MAX_USERS = 1000;
+
     private UserRepository userRepo;
+
     private PasswordEncoder passwordEncoder;
 
     /**
@@ -66,7 +72,7 @@ public class WriteController extends BaseController {
     ) {
         String honeypot = signUpForm.getUsername();
         if (honeypot == null || honeypot.length() > 0) return "redirect:/success";
-        if (userRepo.count() >= 10000) {
+        if (userRepo.count() >= MAX_USERS) {
             redirect.addFlashAttribute("headerErrorMessage", "Sorry, we're not accepting more users at this time.");
             populateSignUpModel(model);
             return "signup";
