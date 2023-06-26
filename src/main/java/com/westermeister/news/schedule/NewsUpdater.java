@@ -25,13 +25,32 @@ import com.westermeister.news.spider.openai.OpenAiSpider;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 
+/**
+ * Responsible for refreshing the news snippets on the homepage.
+ */
 @Component
 public class NewsUpdater {
+    /**
+     * VERY IMPORTANT: This number controls the number of news snippets displayed on the homepage.
+     * It also controls the maximum number of (paid) API calls made to OpenAI for summarization.
+     * <p>
+     * As a side note, it's not actually the number of API calls that counts towards pricing,
+     * but rather the "token" count. To find out more, see: https://openai.com/pricing
+     * <p>
+     * NOTE: Increasing this beyond ~25 has no effect, since the NYTimes API only returns about that many stories.
+     */
+    private final int MAX_SNIPPETS = 15;
+
     private final String taskName = "TASK_UPDATE_NEWS";
+
     private Logger logger = LoggerFactory.getLogger(NewsUpdater.class);
+
     private LockRepository lockRepo;
+
     private SnippetRepository snippetRepo;
+
     private NytimesSpider nytimesSpider;
+
     private OpenAiSpider openAiSpider;
 
     /**
@@ -96,7 +115,7 @@ public class NewsUpdater {
         // Get stories from NYTimes API.
         TimeUnit.SECONDS.sleep(12);
         List<NytimesStory> stories = nytimesSpider.getStories();
-        while (stories.size() > 10) {
+        while (stories.size() > MAX_SNIPPETS) {
             stories.remove(stories.size() - 1);
         }
 
