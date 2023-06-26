@@ -14,7 +14,7 @@
             <ol class="mb-5">
                 <li th:each="snippet : ${snippets}" class="mb-3">
                     <span th:text="${snippet.summary}"></span>
-                    <a th:href="${snippet.source}">source</a>
+                    <a th:href="${snippet.source}" class="link-secondary">[source]</a>
                 </li>
             </ol>
             <section>
