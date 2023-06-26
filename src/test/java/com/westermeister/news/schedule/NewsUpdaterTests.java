@@ -1,7 +1,6 @@
 package com.westermeister.news.schedule;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.westermeister.news.entity.Snippet;
 import com.westermeister.news.repository.LockRepository;
 import com.westermeister.news.repository.SnippetRepository;
 import com.westermeister.news.spider.nytimes.NytimesSpider;
@@ -53,7 +51,7 @@ public class NewsUpdaterTests {
 
         // Verify result.
         verify(lockRepo).findByTask("TASK_UPDATE_NEWS");
-        verify(snippetRepo, atLeastOnce()).save(new Snippet((short) 1, "summary_1", "url_1", any()));
-        verify(snippetRepo, atLeastOnce()).save(new Snippet((short) 2, "summary_2", "url_2", any()));
+        verify(snippetRepo).deleteAll();
+        verify(snippetRepo).saveAll(anyList());
     }
 }

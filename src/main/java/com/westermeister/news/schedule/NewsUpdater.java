@@ -3,6 +3,7 @@ package com.westermeister.news.schedule;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -99,6 +100,7 @@ public class NewsUpdater {
             stories.remove(stories.size() - 1);
         }
 
+        List<Snippet> newSnippets = new ArrayList<>();
         for (int i = 0; i < stories.size(); i++) {
             // Extract relevant story data.
             String headline = stories.get(i).headline();
@@ -116,18 +118,12 @@ public class NewsUpdater {
             );
             String summary = openAiSpider.getSummary(headline, abstractText);
 
-            // Save result to database.
-            Snippet existingSnippet = snippetRepo.findFirstBySlot((short) i).orElse(null);
+            // Prepare new snippet object.
             LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
-            if (existingSnippet == null) {
-                Snippet snippet = new Snippet((short) i, summary, source, now);
-                snippetRepo.save(snippet);
-            } else {
-                existingSnippet.setSummary(summary);
-                existingSnippet.setSource(source);
-                existingSnippet.setLastUpdated(now);
-                snippetRepo.save(existingSnippet);
-            }
+            Snippet snippet = new Snippet((short) i, summary, source, now);
+            newSnippets.add(snippet);
         }
+        snippetRepo.deleteAll();
+        snippetRepo.saveAll(newSnippets);
     }
 }
