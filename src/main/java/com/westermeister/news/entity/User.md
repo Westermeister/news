@@ -17,20 +17,19 @@ CREATE TABLE user_ (
 ## Columns
 
 - id
-    - Surrogate primary key
+    - Surrogate primary key.
 - name
-    - User's real-life name (not a username)
+    - User's real-life name (not a username).
 - email
-    - User's email address; 255 chars should be enough
+    - User's email address; 255 chars should be enough.
     - Source: https://stackoverflow.com/a/574698
 - password
-    - This should be a salted hash, not plain text
+    - This should be a salted hash, not plain text.
 - role
-    - Used by Spring Security for authority / permissions
+    - Used by Spring Security for authority / permissions.
     - e.g. `ROLE_USER`, `ROLE_ADMIN`, etc.
 - created
-    - UNIX timestamp; precise to the second
-    - Represents time that user first signed up / was added to the database
+    - Represents time that user first signed up / was added to the database.
 - last_sign_in
-    - Same as above, but represents time that user last signed in
-    - Signing up counts as signing in
+    - Represents time that user last signed in.
+    - Signing up counts as signing in.
