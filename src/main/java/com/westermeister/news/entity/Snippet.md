@@ -5,7 +5,7 @@
 ```sql
 CREATE TABLE snippet (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    slot SMALLINT,
+    slot SMALLINT UNIQUE,
     summary CHARACTER VARYING(1000),
     source CHARACTER VARYING(1000),
     last_updated TIMESTAMP(0) WITHOUT TIME ZONE
@@ -17,12 +17,11 @@ CREATE TABLE snippet (
 - id
     - Surrogate primary key.
 - slot
-    - Should be an integer from 0 to 9.
-    - The app only displays the top 10 news snippets, in order that they're retrieved from the NYTimes API.
-    - The order corresponds to the slot number.
-    - When the news is refreshed, the existing slots are replaced with new ones.
+    - Should be an integer, >= 0.
+    - The "slot" represents a spot on the homepage's list for displaying a news snippet.
+    - So for example, slot 0 is the first news snippet, slot 1 is the next snippet, and so on.
 - summary
-    - The news snippet that's displayed.
+    - The text of the news snippet that's displayed.
 - source
     - Link (URL) to the source.
 - last_updated

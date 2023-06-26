@@ -14,7 +14,7 @@ CREATE TABLE user_ (
 --changeset westermeister:2
 CREATE TABLE snippet (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    slot SMALLINT,
+    slot SMALLINT UNIQUE,
     summary CHARACTER VARYING(1000),
     source CHARACTER VARYING(1000),
     last_updated TIMESTAMP(0) WITHOUT TIME ZONE
