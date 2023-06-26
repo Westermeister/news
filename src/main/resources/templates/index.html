@@ -11,12 +11,24 @@
             <h1 class="display-4 text-center mb-5">Daily News Summary</h1>
         </header>
         <main>
-            <ol class="mb-5">
+            <!--/* If authenticated, show all news snippets. */-->
+            <ol sec:authorize="isAuthenticated()" class="mb-5">
                 <li th:each="snippet : ${snippets}" class="mb-3">
                     <span th:text="${snippet.summary}"></span>
                     <a th:href="${snippet.source}" class="link-secondary">[source]</a>
                 </li>
             </ol>
+            <!--/* If not authenticated, show only 10 news snippets at max. */-->
+            <ol sec:authorize="!isAuthenticated()" class="mb-5">
+                <li th:each="snippet : ${snippets}" th:if="${snippet.slot < 10}" class="mb-3">
+                    <span th:text="${snippet.summary}"></span>
+                    <a th:href="${snippet.source}" class="link-secondary">[source]</a>
+                </li>
+            </ol>
+            <p sec:authorize="!isAuthenticated()" class="text-center mb-5">
+                This is only a preview. If you want to see more,
+                <a th:href="@{/signup}">sign up</a>.
+            </p>
             <section>
                 <p class="text-secondary text-center mb-3">
                     Data provided by
