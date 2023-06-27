@@ -30,8 +30,8 @@ public class Snippet {
     @Column(name = "source")
     private String source;
 
-    @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+    @Column(name = "created")
+    private LocalDateTime created;
 
     protected Snippet() {}
 
@@ -40,17 +40,17 @@ public class Snippet {
      *
      * @see "Snippet.md" for schema docs
      */
-    public Snippet(Short slot, String summary, String source, LocalDateTime lastUpdated) {
+    public Snippet(Short slot, String summary, String source, LocalDateTime created) {
         this.slot = slot;
         this.summary = summary;
         this.source = source;
-        this.lastUpdated = lastUpdated;
+        this.created = created;
     }
 
     @Override
     public String toString() {
-        return "Snippet [id=" + id + ", slot=" + slot + ", summary=" + summary + ", source=" + source + ", lastUpdated="
-                + lastUpdated + "]";
+        return "Snippet [id=" + id + ", slot=" + slot + ", summary=" + summary + ", source=" + source + ", created="
+                + created + "]";
     }
 
     /**
@@ -105,14 +105,14 @@ public class Snippet {
     /**
      * @see "Snippet.md" for schema docs
      */
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
     /**
      * @see "Snippet.md" for schema docs
      */
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 }

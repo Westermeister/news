@@ -17,7 +17,7 @@ CREATE TABLE snippet (
     slot SMALLINT UNIQUE,
     summary CHARACTER VARYING(1000),
     source CHARACTER VARYING(1000),
-    last_updated TIMESTAMP(0) WITHOUT TIME ZONE
+    created TIMESTAMP(0) WITHOUT TIME ZONE
 );
 
 --changeset westermeister:3

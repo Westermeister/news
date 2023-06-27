@@ -8,7 +8,7 @@ CREATE TABLE snippet (
     slot SMALLINT UNIQUE,
     summary CHARACTER VARYING(1000),
     source CHARACTER VARYING(1000),
-    last_updated TIMESTAMP(0) WITHOUT TIME ZONE
+    created TIMESTAMP(0) WITHOUT TIME ZONE
 );
 ```
 
@@ -24,5 +24,5 @@ CREATE TABLE snippet (
     - The text of the news snippet that's displayed.
 - source
     - Link (URL) to the source.
-- last_updated
-    - Timestamp when this slot was last updated.
+- created
+    - Timestamp when this snippet was created.
