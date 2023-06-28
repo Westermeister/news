@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.westermeister.news.entity.Snippet;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,4 +18,11 @@ public interface SnippetRepository extends CrudRepository<Snippet, Long> {
      * @return      list of snippets
      */
     Optional<Snippet> findFirstBySlot(Short slot);
+
+    /**
+     * Find snippets ordered by slot numbers.
+     *
+     * @return list of snippets by slot number in ascending order
+     */
+    List<Snippet> findAllByOrderBySlotAsc();
 }

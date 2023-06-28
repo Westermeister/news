@@ -1,6 +1,7 @@
 package com.westermeister.news.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -74,7 +75,7 @@ public abstract class BaseController {
      * @param model  will be modified to add the news snippets
      */
     public void populateIndexModel(Model model) {
-        Iterable<Snippet> snippets = snippetRepo.findAll();
+        List<Snippet> snippets = snippetRepo.findAllByOrderBySlotAsc();
         model.addAttribute("snippets", snippets);
     }
 
