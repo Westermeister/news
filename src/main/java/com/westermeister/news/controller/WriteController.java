@@ -36,7 +36,7 @@ public class WriteController extends BaseController {
     /**
      * Don't allow more sign-ups than this.
      */
-    private final int MAX_USERS = 1000;
+    private final int MAX_USERS = 100;
 
     private Logger logger = LoggerFactory.getLogger(WriteController.class);
 
