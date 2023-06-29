@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,8 @@ public class WriteController extends BaseController {
      * Don't allow more sign-ups than this.
      */
     private final int MAX_USERS = 1000;
+
+    private Logger logger = LoggerFactory.getLogger(WriteController.class);
 
     private UserRepository userRepo;
 
@@ -105,8 +109,7 @@ public class WriteController extends BaseController {
             );
             return "redirect:/account";
         } catch (ServletException e) {
-            System.err.println("Failed to sign in user after registration, got below error:");
-            e.printStackTrace();
+            logger.error("Failed to sign in user after registration", e);
             return "redirect:/signin";
         }
     }
@@ -239,8 +242,7 @@ public class WriteController extends BaseController {
         try {
             request.logout();
         } catch (ServletException e) {
-            System.err.format("Failed to sign out user that's about to be deleted: %d%n", user.getId());
-            e.printStackTrace();
+            logger.error(String.format("Failed to sign out user that's about to be deleted: %d%n", user.getId()), e);
         }
         userRepo.delete(user);
         redirect.addFlashAttribute("headerSuccessMessage", "Your account was succesfully deleted.");

@@ -3,6 +3,8 @@ package com.westermeister.news.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,6 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * Provide common methods shared by all controllers.
  */
 public abstract class BaseController {
+    private Logger logger = LoggerFactory.getLogger(BaseController.class);
     private UserRepository userRepo;
     private SnippetRepository snippetRepo;
 
@@ -63,7 +66,7 @@ public abstract class BaseController {
             request.logout();
         } catch (ServletException e) {
             long userId = Long.parseLong(principal.getName());
-            System.err.format("Failed to sign out user with unknown ID: %d%n", userId);
+            logger.error(String.format("Failed to sign out user with unknown ID: %d%n", userId));
         }
         redirect.addFlashAttribute("headerErrorMessage", "Please sign in again.");
         return "redirect:/signin";
