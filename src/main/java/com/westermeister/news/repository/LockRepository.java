@@ -2,8 +2,8 @@ package com.westermeister.news.repository;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.QueryHints;
-import org.springframework.data.repository.CrudRepository;
 
 import com.westermeister.news.entity.Lock;
 
@@ -13,7 +13,7 @@ import jakarta.persistence.QueryHint;
 /**
  * CRUD interface for interacting with the lock table.
  */
-public interface LockRepository extends CrudRepository<Lock, Long> {
+public interface LockRepository extends JpaRepository<Lock, Long> {
     /**
      * Lock row by task name.
      *

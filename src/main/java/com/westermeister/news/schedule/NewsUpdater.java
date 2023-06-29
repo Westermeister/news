@@ -143,6 +143,7 @@ public class NewsUpdater {
             newSnippets.add(snippet);
         }
         snippetRepo.deleteAll();
+        snippetRepo.flush();
         snippetRepo.saveAll(newSnippets);
     }
 }

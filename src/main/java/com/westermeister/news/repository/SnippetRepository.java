@@ -1,6 +1,6 @@
 package com.westermeister.news.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.westermeister.news.entity.Snippet;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * CRUD interface for interacting with the snippet table.
  */
-public interface SnippetRepository extends CrudRepository<Snippet, Long> {
+public interface SnippetRepository extends JpaRepository<Snippet, Long> {
     /**
      * Find snippet by its slot number.
      *
