@@ -52,8 +52,8 @@ create schema public;
 ./gradlew test
 ```
 
-6. Repeat steps 2 - 5 for subsequent tests.
+6. Repeat steps 2 - 5 or 3 - 5 (depending on whether we want to start from a clean database) for subsequent tests.
 
-For convenience, you can have multiple separate terminal instances so that you can quickly do each of the steps 2 - 5.
+For convenience, you can have multiple separate terminal instances so that you can quickly do each of the steps.
 
 This is a bit of a crude procedure, and could probably use some improvements, but it's sufficient for now.
