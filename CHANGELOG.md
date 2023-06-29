@@ -1,3 +1,7 @@
+# 2023.06.28.1
+
+- Replaced `System` logging with Logback logging.
+
 # 2023.06.28
 
 - Fixed issue where the news snippets were never being refreshed.
