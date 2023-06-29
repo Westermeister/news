@@ -1,7 +1,6 @@
 package com.westermeister.news.schedule;
 
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -27,10 +26,10 @@ public class NewsUpdaterTests {
     @MockBean
     private OpenAiSpider openAiSpider;
 
-    @MockBean
+    @Autowired
     private LockRepository lockRepo;
 
-    @MockBean
+    @Autowired
     private SnippetRepository snippetRepo;
 
     @Autowired
@@ -50,8 +49,9 @@ public class NewsUpdaterTests {
         newsUpdater.updateNews();
 
         // Verify result.
-        verify(lockRepo).findByTask("TASK_UPDATE_NEWS");
-        verify(snippetRepo).deleteAll();
-        verify(snippetRepo).saveAll(anyList());
+        long numLocks = lockRepo.count();
+        assertEquals(numLocks, 1);
+        long numSnippets = snippetRepo.count();
+        assertEquals(numSnippets, 2);
     }
 }
