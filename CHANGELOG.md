@@ -1,3 +1,12 @@
+# 2023.06.28.2
+
+- Reduced max users from 1000 to 100.
+- Reduced max number of concurrent user sessions from 10 to 5.
+- Refactored `NewsUpdater` task to avoid the flushing operation.
+- Reverted all repositories back to `CrudRepository`.
+- Updated docs for `Snippet` table, column `created`.
+- Added note about cleaning the database in the testing docs.
+
 # 2023.06.28.1
 
 - Replaced `System` logging with Logback logging.
