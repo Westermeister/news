@@ -80,7 +80,7 @@ public class SecurityConfiguration {
                 .permitAll()
             )
             .sessionManagement((session) -> session
-                .maximumSessions(10)
+                .maximumSessions(5)
             );
         return http.build();
     }
