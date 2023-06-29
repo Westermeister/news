@@ -139,13 +139,18 @@ public class NewsUpdater {
             );
             String summary = openAiSpider.getSummary(headline, abstractText);
 
-            // Prepare new snippet object.
+            // Prepare snippet.
             LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
-            Snippet snippet = new Snippet((short) i, summary, source, now);
+            Snippet snippet = snippetRepo.findFirstBySlot((short) i).orElse(null);
+            if (snippet == null) {
+                snippet = new Snippet((short) i, summary, source, now);
+            } else {
+                snippet.setSummary(summary);
+                snippet.setSource(source);
+                snippet.setCreated(now);
+            }
             newSnippets.add(snippet);
         }
-        snippetRepo.deleteAll();
-        snippetRepo.flush();
         snippetRepo.saveAll(newSnippets);
     }
 }
