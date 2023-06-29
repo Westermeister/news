@@ -34,20 +34,26 @@ drop schema public cascade;
 create schema public;
 ```
 
-3. Start the server:
+3. Clean any existing build files:
+
+```bash
+./gradlew clean
+```
+
+4. Start the server:
 
 ```bash
 ./gradlew bootRun
 ```
 
-4. Start the tests:
+5. Start the tests:
 
 ```bash
 ./gradlew test
 ```
 
-5. Repeat steps 2 - 4 for subsequent tests.
+6. Repeat steps 2 - 5 for subsequent tests.
 
-For convenience, you should have 3 separate terminal instances so that you can quickly do each of the steps 2 - 4.
+For convenience, you can have multiple separate terminal instances so that you can quickly do each of the steps 2 - 5.
 
 This is a bit of a crude procedure, and could probably use some improvements, but it's sufficient for now.
