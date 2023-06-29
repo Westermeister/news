@@ -25,4 +25,4 @@ CREATE TABLE snippet (
 - source
     - Link (URL) to the source.
 - created
-    - Timestamp when this snippet was created.
+    - Timestamp when the summary / source columns were last updated.
