@@ -12,5 +12,9 @@ CREATE TABLE lock (
 
 ## Columns
 
+- id
+    - Surrogate primary key.
 - task
     - Name of the scheduled task being run.
+- created
+    - When this row was initially created.
