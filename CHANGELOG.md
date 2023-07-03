@@ -1,3 +1,7 @@
+# 2023.07.03
+
+- Added gzip compression.
+
 # 2023.06.28.2
 
 - Reduced max users from 1000 to 100.
