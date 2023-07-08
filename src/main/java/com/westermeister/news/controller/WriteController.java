@@ -75,7 +75,9 @@ public class WriteController extends BaseController {
         Model model
     ) {
         String honeypot = signUpForm.getUsername();
-        if (honeypot == null || honeypot.length() > 0) return "redirect:/success";
+        if (honeypot == null || honeypot.length() > 0) {
+            return "redirect:/success";
+        }
         if (userRepo.count() >= MAX_USERS) {
             redirect.addFlashAttribute("headerErrorMessage", "Sorry, we're not accepting more users at this time.");
             populateSignUpModel(model);
@@ -136,11 +138,15 @@ public class WriteController extends BaseController {
     ) {
         if (result.hasErrors()) {
             String error = populateAccountModel(model, principal, request, redirect);
-            if (!error.isEmpty()) return error;
+            if (!error.isEmpty()) {
+                return error;
+            }
             return "account";
         }
         User user = loadUserFromPrincipal(principal);
-        if (user == null) return handleMissingUser(request, redirect, principal);
+        if (user == null) {
+            return handleMissingUser(request, redirect, principal);
+        }
         user.setName(updateNameForm.getName());
         userRepo.save(user);
         redirect.addFlashAttribute("headerSuccessMessage", "Your name was successfully updated.");
@@ -169,18 +175,24 @@ public class WriteController extends BaseController {
     ) {
         if (result.hasErrors()) {
             String error = populateAccountModel(model, principal, request, redirect);
-            if (!error.isEmpty()) return error;
+            if (!error.isEmpty()) {
+                return error;
+            }
             return "account";
         }
         User user = loadUserFromPrincipal(principal);
-        if (user == null) return handleMissingUser(request, redirect, principal);
+        if (user == null) {
+            return handleMissingUser(request, redirect, principal);
+        }
         user.setEmail(updateEmailForm.getEmail());
         try {
             userRepo.save(user);
         } catch (DataIntegrityViolationException e) {
             result.rejectValue("email", null, "Another user is already using this email address.");
             String error = populateAccountModel(model, principal, request, redirect);
-            if (!error.isEmpty()) return error;
+            if (!error.isEmpty()) {
+                return error;
+            }
             return "account";
         }
         redirect.addFlashAttribute("headerSuccessMessage", "Your email was successfully updated.");
@@ -209,15 +221,21 @@ public class WriteController extends BaseController {
     ) {
         if (result.hasErrors()) {
             String error = populateAccountModel(model, principal, request, redirect);
-            if (!error.isEmpty()) return error;
+            if (!error.isEmpty()) {
+                return error;
+            }
             return "account";
         }
         User user = loadUserFromPrincipal(principal);
-        if (user == null) return handleMissingUser(request, redirect, principal);
+        if (user == null) {
+            return handleMissingUser(request, redirect, principal);
+        }
         if (!passwordEncoder.matches(updatePasswordForm.getCurrentPassword(), user.getPassword())) {
             result.rejectValue("currentPassword", null, "Incorrect password.");
             String error = populateAccountModel(model, principal, request, redirect);
-            if (!error.isEmpty()) return error;
+            if (!error.isEmpty()) {
+                return error;
+            }
             return "account";
         }
         String newPassword = passwordEncoder.encode(updatePasswordForm.getNewPassword());
@@ -238,7 +256,9 @@ public class WriteController extends BaseController {
     @PostMapping("/delete/user")
     public String deleteUser(Principal principal, HttpServletRequest request, RedirectAttributes redirect) {
         User user = loadUserFromPrincipal(principal);
-        if (user == null) return handleMissingUser(request, redirect, principal);
+        if (user == null) {
+            return handleMissingUser(request, redirect, principal);
+        }
         try {
             request.logout();
         } catch (ServletException e) {

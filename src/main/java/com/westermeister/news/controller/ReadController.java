@@ -79,7 +79,9 @@ public class ReadController extends BaseController {
         Model model
     ) {
         String error = populateAccountModel(model, principal, request, redirect);
-        if (!error.isEmpty()) return error;
+        if (!error.isEmpty()) {
+            return error;
+        }
         return "account";
     }
 
