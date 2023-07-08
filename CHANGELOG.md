@@ -1,3 +1,7 @@
+# 2023.07.08
+
+- Refactored guard clauses for readability; they're now spread out across multiple lines instead of a single line.
+
 # 2023.07.03
 
 - Added gzip compression.
